@@ -6,7 +6,8 @@ const Row = styled.div`
   ${(props) =>
     props.type === "horiz" &&
     css`
-      justify-content: space-between;
+      justify-content: center;
+      gap: 1rem;
       align-items: center;
     `}
 
