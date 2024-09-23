@@ -1,14 +1,15 @@
-import { useEffect } from "react";
-import { getRooms } from "../services/apiRooms";
+import styled from "styled-components";
+import RoomTable from "../features/rooms/RoomTable";
+import Row from "../ui/Row";
 
 function Rooms() {
-  useEffect(function () {
-    getRooms().then((data) => console.log(data));
-  }, []);
-  
   return (
     <div>
-      <h1>Rooms</h1>
+      <Row>
+        <h1>All rooms</h1>
+        <button>Filter/sort</button>
+      </Row>
+      <RoomTable />
     </div>
   );
 }
