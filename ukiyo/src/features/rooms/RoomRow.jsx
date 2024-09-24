@@ -1,5 +1,8 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
+import { deleteRoom } from "../../services/apiRooms";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const TableRow = styled.div`
   display: grid;
@@ -7,12 +10,16 @@ const TableRow = styled.div`
   column-gap: 2rem;
   align-items: center;
   padding: 1rem;
+  color: var(--dark-text-color);
 
   &:not(:last-child) {
     border-bottom: 1px solid var(--emphasis-color);
   }
-  color: var(--dark-text-color);
-  &:hover:nth-child()
+
+  &:hover {
+    background-color: var(--light-bg-color);
+    transition: background-color 0.3s;
+  }
 `;
 
 const Img = styled.img`
@@ -21,17 +28,60 @@ const Img = styled.img`
   height: 9rem;
 `;
 
+const Price = styled.div`
+  font-weight: 700;
+`;
+
+const Discount = styled.div`
+  color: var(--success-color);
+  font-weight: 700;
+`;
+
+const Delete = styled.button`
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: var(--danger-color);
+  color: var(--light-text-color);
+
+  &:hover {
+    background-color: var(--dark-danger-color);
+    transition: background-color 0.35s;
+  }
+`;
+
 function RoomRow({ room }) {
-  const { name, maxCapacity, regularPrice, discount, img } = room;
+  const { id, name, maxCapacity, regularPrice, discount, img } = room;
+
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: deleteRoom,
+    onSuccess: () => {
+      toast.success("You've successfully deleted the room!");
+      queryClient.invalidateQueries({
+        queryKey: ["rooms"],
+      });
+    },
+    onError: (e) => toast.error(e.message),
+  });
+
+  function deleteHandle() {
+    if (window.confirm(`Are you sure you want to delete ${name} room?`))
+      mutate(id);
+  }
 
   return (
     <TableRow role="row">
       <Img src={img} />
       <div>{name}</div>
-      <div>Fits up to {maxCapacity} people</div>
-      <div>{regularPrice}</div>
-      <div>{discount}</div>
-      <button>Delete</button>
+      <div>Up to {maxCapacity} people</div>
+      <Price>${regularPrice}</Price>
+      {discount !== 0 ? <Discount>${discount}</Discount> : "—"}
+      <Delete onClick={deleteHandle} disabled={isPending}>
+        Delete
+      </Delete>
     </TableRow>
   );
 }

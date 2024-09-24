@@ -5,12 +5,14 @@ const GlobalStyles = createGlobalStyle`
         --main-color: #6b7b6e;
         --emphasis-color: #3e5d6c;
         --light-emphasis-color: #708f9f;
+        --dark-emphasis-color: #354a54;
         --light-text-color: #f3fcf4;
         --dark-text-color: #182c1d;
         --light-bg-color: #9fafa1;
         --dark-bg-color: #495e4d;
-        --success-color: #87a12c;
-        --danger-color: #b20020;
+        --success-color: #259651;
+        --danger-color: #c23036;
+        --dark-danger-color: #a0001e;
     }
 
     * {

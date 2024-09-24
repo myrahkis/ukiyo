@@ -32,6 +32,7 @@ const StyledNavLink = styled(NavLink)`
   &.active:link,
   &.active:visited {
     background-color: var(--main-color);
+    transition: background-color 0.5s;
   }
 `;
 

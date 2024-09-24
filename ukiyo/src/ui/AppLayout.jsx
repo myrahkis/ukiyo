@@ -11,8 +11,12 @@ const StyledAppLayout = styled.div`
 `;
 
 const Main = styled.main`
-padding: 3rem 4rem;
-  /* background-color: green; */
+  padding: 5rem 4rem;
+`;
+
+const Container = styled.div`
+  max-width: 120rem;
+  margin: 0 auto;
 `;
 
 function AppLayout() {
@@ -21,7 +25,9 @@ function AppLayout() {
       <Header />
       <Sidebar />
       <Main>
-        <Outlet />
+        <Container>
+          <Outlet />
+        </Container>
       </Main>
     </StyledAppLayout>
   );

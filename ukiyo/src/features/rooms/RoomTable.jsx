@@ -2,12 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getRooms } from "../../services/apiRooms";
 import styled from "styled-components";
 import RoomRow from "./RoomRow";
+import CreateRoomForm from "./CreateRoomForm";
 
 const Table = styled.div`
   overflow: hidden;
   border: 1px solid var(--main-color);
-  border-radius: 0.8rem;
-  background-color: var(--light-bg-color);
+  border-radius: 1.5rem;
+  background-color: #c4d6c6;
 `;
 
 const TableHeader = styled.header`
@@ -16,10 +17,11 @@ const TableHeader = styled.header`
   column-gap: 2rem;
   align-items: center;
   text-transform: uppercase;
+  font-size: 1.8rem;
   font-weight: 600;
   border-bottom: 1px solid var(--emphasis-color);
   background-color: var(--main-color);
-  padding: 1rem;
+  padding: 1.5rem 1rem;
 `;
 
 function RoomTable() {
@@ -32,19 +34,19 @@ function RoomTable() {
   if (isLoading) return <h1>Loading...</h1>;
 
   return (
-    <Table role="table">
-      <TableHeader role="row">
-        <div></div>
-        <div>Room</div>
-        <div>Capacity</div>
-        <div>Price</div>
-        <div>Discount</div>
-        <div></div>
-      </TableHeader>
-      {rooms.map((room) => (
-        <RoomRow key={room.id} room={room} />
-      ))}
-    </Table>
+      <Table role="table">
+        <TableHeader role="row">
+          <div></div>
+          <div>Room</div>
+          <div>Capacity</div>
+          <div>Price</div>
+          <div>Discount</div>
+          <div></div>
+        </TableHeader>
+        {rooms.map((room) => (
+          <RoomRow key={room.id} room={room} />
+        ))}
+      </Table>
   );
 }
 

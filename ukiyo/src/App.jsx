@@ -11,6 +11,7 @@ import Settings from "./pages/Settings";
 import Users from "./pages/Users";
 import GlobalStyles from "./styles/GlobalStyles";
 import AppLayout from "./ui/AppLayout";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +26,21 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <GlobalStyles />
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: { duration: 3000 },
+          error: { duration: 3000 },
+          style: {
+            fontSize: "1.5rem",
+            maxWidth: "500px",
+            padding: "2rem 3rem",
+            backgroundColor: "var(--light-bg-color)",
+          },
+        }}
+      />
       <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
