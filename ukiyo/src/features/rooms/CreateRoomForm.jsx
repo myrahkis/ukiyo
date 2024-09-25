@@ -1,5 +1,9 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { createRoom } from "../../services/apiRooms";
+import toast from "react-hot-toast";
+import FormRow from "../../ui/FormRow";
 
 const Form = styled.form`
   display: flex;
@@ -11,20 +15,16 @@ const Form = styled.form`
   width: fit-content;
 `;
 
-const FormRow = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
-
-const Label = styled.label`
-  width: 16rem;
-`;
-
 const Input = styled.input`
   border: none;
   border-radius: 1.5rem;
   padding: 1rem;
   width: 25rem;
+  font-size: 1.3rem;
+
+  &:focus {
+    outline: 0.2rem dashed var(--emphasis-color);
+  }
 `;
 
 const TextArea = styled.textarea`
@@ -34,6 +34,17 @@ const TextArea = styled.textarea`
   width: 25rem;
   max-width: 25rem;
   min-width: 10rem;
+  font-size: 1.4rem;
+
+  &:focus {
+    outline: 0.2rem dashed var(--emphasis-color);
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 `;
 
 const Button = styled.button`
@@ -42,7 +53,6 @@ const Button = styled.button`
   border: none;
   border-radius: 1.5rem;
   font-size: 1.8rem;
-  align-self: flex-end;
   background-color: var(--emphasis-color);
   color: var(--light-text-color);
 
@@ -53,42 +63,112 @@ const Button = styled.button`
 `;
 
 function CreateRoomForm() {
-  const { register, handleSubmit } = useForm();
+  const queryClient = useQueryClient();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm();
+  const { mutate, isPending } = useMutation({
+    mutationFn: createRoom,
+    onSuccess: () => {
+      toast.success("New room was added!");
+      queryClient.invalidateQueries({
+        queryKey: ["rooms"],
+      });
+      reset();
+    },
+    onError: () => {
+      toast.error("Failed to add a new room!");
+    },
+  });
 
   function onSubmit(data) {
-    console.log(data);
+    mutate(data);
   }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow>
-        <Label htmlFor="name">Room name</Label>
-        <Input type="text" id="name" {...register("name")} />
+      <FormRow label="Name" error={errors?.name}>
+        <Input
+          type="text"
+          id="name"
+          disabled={isPending}
+          {...register("name", {
+            required: "This field is required",
+            minLength: {
+              value: 2,
+              message: "Name should be longer than 2 symbols!",
+            },
+          })}
+        />
       </FormRow>
-      <FormRow>
-        <Label htmlFor="maxCapacity">Maximum capacity</Label>
-        <Input type="number" id="maxCapacity" {...register("maxCapacity")} />
+      <FormRow label="Max capacity" error={errors?.maxCapacity}>
+        <Input
+          type="number"
+          id="maxCapacity"
+          disabled={isPending}
+          {...register("maxCapacity", {
+            required: "This field is required.",
+            min: {
+              value: 1,
+              message: "Capacity must be at least 1!",
+            },
+          })}
+        />
       </FormRow>
-      <FormRow>
-        <Label htmlFor="regularPrice">Price</Label>
-        <Input type="number" id="regularPrice" {...register("regularPrice")} />
+      <FormRow label="Price" error={errors?.regularPrice}>
+        <Input
+          type="number"
+          id="regularPrice"
+          disabled={isPending}
+          {...register("regularPrice", {
+            required: "This field is required.",
+            min: {
+              value: 1,
+              message: "Price cannot be negative!",
+            },
+          })}
+        />
       </FormRow>
-      <FormRow>
-        <Label htmlFor="discount">Discount</Label>
-        <Input type="number" id="discount" {...register("discount")} />
+      <FormRow label="Discount" error={errors?.discount}>
+        <Input
+          type="number"
+          id="discount"
+          disabled={isPending}
+          {...register("discount", {
+            required: "This field is required.",
+            min: {
+              value: 0,
+              message: "Discount cannot be negative!",
+            },
+            validate: (value) =>
+              +value <= +getValues().regularPrice ||
+              "Discount should be less than price!",
+          })}
+        />
       </FormRow>
-      <FormRow>
-        <Label htmlFor="desc">Room description</Label>
-        <TextArea id="desc" {...register("desc")} />
+      <FormRow label="Description" error={errors?.description}>
+        <TextArea
+          id="description"
+          disabled={isPending}
+          {...register("description", {
+            required: "This field is required.",
+          })}
+        />
       </FormRow>
-      <FormRow>
-        <Label htmlFor="img">Photo</Label>
-        <Input id="img" accept="image/*" />
+      <FormRow label="Photo" error={errors?.img}>
+        <Input id="img" accept="image/*" disabled={isPending} />
+        {/* {errors.name && <Error>{errors.name.message}</Error>} */}
       </FormRow>
-      <div>
+      <ButtonContainer>
         <Button type="reset">Clear</Button>
-        <Button type="submit">Add</Button>
-      </div>
+        <Button type="submit" disabled={isPending}>
+          Add
+        </Button>
+      </ButtonContainer>
     </Form>
   );
 }

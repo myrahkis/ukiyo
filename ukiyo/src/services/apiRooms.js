@@ -21,3 +21,17 @@ export async function deleteRoom(id) {
 
   return null;
 }
+
+export async function createRoom(newRoom) {
+  const { data, error } = await supabase
+    .from("rooms")
+    .insert([newRoom])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Couldn't add new room!");
+  }
+
+  return data;
+}

@@ -12,6 +12,11 @@ const StyledAppLayout = styled.div`
 
 const Main = styled.main`
   padding: 5rem 4rem;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--dark-bg-color) var(--light-bg-color);
 `;
 
 const Container = styled.div`
