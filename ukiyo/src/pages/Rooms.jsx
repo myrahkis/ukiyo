@@ -2,7 +2,7 @@ import styled from "styled-components";
 import RoomTable from "../features/rooms/RoomTable";
 import Row from "../ui/Row";
 import { useState } from "react";
-import CreateRoomForm from "../features/rooms/CreateRoomForm";
+import CreateRoomForm from "../features/rooms/CreateEditRoomForm";
 
 const Heading = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ function Rooms() {
         <Sort>Filter/sort</Sort>
       </Heading>
       <RoomTable />
-      <button onClick={() => setIsOpen(true)}>Add new room</button>
+      <button onClick={() => setIsOpen((open) => !open)}>Add new room</button>
       {isOpen && <CreateRoomForm />}
     </div>
   );

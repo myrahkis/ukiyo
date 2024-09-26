@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { createRoom } from "../../services/apiRooms";
+import { createEditRoom } from "../../services/apiRooms";
 import toast from "react-hot-toast";
 import FormRow from "../../ui/FormRow";
 
@@ -41,6 +42,22 @@ const TextArea = styled.textarea`
   }
 `;
 
+const File = styled.input`
+  &::file-selector-button {
+    cursor: pointer;
+    padding: 1rem 2rem;
+    background-color: var(--main-color);
+    color: var(--light-text-color);
+    border: none;
+    border-radius: 2rem;
+
+    &:hover {
+      background-color: var(--dark-bg-color);
+      transition: background-color 0.3s;
+    }
+  }
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -62,7 +79,9 @@ const Button = styled.button`
   }
 `;
 
-function CreateRoomForm() {
+function CreateEditRoomForm({ roomToEdit = {} }) {
+  const { id: editId, ...editValues } = roomToEdit;
+  const isEditSession = Boolean(editId);
   const queryClient = useQueryClient();
   const {
     register,
@@ -70,9 +89,9 @@ function CreateRoomForm() {
     reset,
     getValues,
     formState: { errors },
-  } = useForm();
-  const { mutate, isPending } = useMutation({
-    mutationFn: createRoom,
+  } = useForm({ defaultValues: isEditSession ? editValues : {} });
+  const { mutate: createRoom, isPending } = useMutation({
+    mutationFn: createEditRoom,
     onSuccess: () => {
       toast.success("New room was added!");
       queryClient.invalidateQueries({
@@ -85,8 +104,27 @@ function CreateRoomForm() {
     },
   });
 
+  const { mutate: editRoom, isPending: isEditing } = useMutation({
+    mutationFn: ({ newRoomData, id }) => createEditRoom(newRoomData, id),
+    onSuccess: () => {
+      toast.success("The room was edited!");
+      queryClient.invalidateQueries({
+        queryKey: ["rooms"],
+      });
+      reset();
+    },
+    onError: () => {
+      toast.error("Failed to edit the room!");
+    },
+  });
+
+  const isWorking = isPending || isEditing;
+
   function onSubmit(data) {
-    mutate(data);
+    const img = typeof data.img === "string" ? data.img : data.img[0];
+
+    if (isEditSession) editRoom({ newRoomData: { ...data, img }, id: editId });
+    else createRoom({ ...data, img: img });
   }
 
   return (
@@ -95,7 +133,7 @@ function CreateRoomForm() {
         <Input
           type="text"
           id="name"
-          disabled={isPending}
+          disabled={isWorking}
           {...register("name", {
             required: "This field is required",
             minLength: {
@@ -109,7 +147,7 @@ function CreateRoomForm() {
         <Input
           type="number"
           id="maxCapacity"
-          disabled={isPending}
+          disabled={isWorking}
           {...register("maxCapacity", {
             required: "This field is required.",
             min: {
@@ -123,7 +161,7 @@ function CreateRoomForm() {
         <Input
           type="number"
           id="regularPrice"
-          disabled={isPending}
+          disabled={isWorking}
           {...register("regularPrice", {
             required: "This field is required.",
             min: {
@@ -137,7 +175,7 @@ function CreateRoomForm() {
         <Input
           type="number"
           id="discount"
-          disabled={isPending}
+          disabled={isWorking}
           {...register("discount", {
             required: "This field is required.",
             min: {
@@ -153,24 +191,34 @@ function CreateRoomForm() {
       <FormRow label="Description" error={errors?.description}>
         <TextArea
           id="description"
-          disabled={isPending}
+          disabled={isWorking}
           {...register("description", {
             required: "This field is required.",
           })}
         />
       </FormRow>
       <FormRow label="Photo" error={errors?.img}>
-        <Input id="img" accept="image/*" disabled={isPending} />
+        <File
+          type="file"
+          id="img"
+          accept="image/*"
+          disabled={isWorking}
+          {...register("img", {
+            required: isEditSession ? false : "This field is required.",
+          })}
+        />
         {/* {errors.name && <Error>{errors.name.message}</Error>} */}
       </FormRow>
       <ButtonContainer>
-        <Button type="reset">Clear</Button>
-        <Button type="submit" disabled={isPending}>
-          Add
+        <Button type="reset" disabled={isWorking}>
+          Clear
+        </Button>
+        <Button type="submit" disabled={isWorking}>
+          {isEditSession ? "Edit" : "Add"}
         </Button>
       </ButtonContainer>
     </Form>
   );
 }
 
-export default CreateRoomForm;
+export default CreateEditRoomForm;

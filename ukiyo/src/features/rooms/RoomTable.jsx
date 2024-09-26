@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getRooms } from "../../services/apiRooms";
 import styled from "styled-components";
 import RoomRow from "./RoomRow";
-import CreateRoomForm from "./CreateRoomForm";
 
 const Table = styled.div`
   overflow: hidden;
