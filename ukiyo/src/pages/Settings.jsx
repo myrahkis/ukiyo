@@ -1,7 +1,10 @@
+import UpdateSettingsForm from "../features/settings/UpdateSettingsForm";
+
 function Settings() {
   return (
     <div>
-      <h1>Settings</h1>
+      <h1>Update hotel settings</h1>
+      <UpdateSettingsForm />
     </div>
   );
 }
