@@ -1,10 +1,8 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import { deleteRoom } from "../../services/apiRooms";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import CreateEditRoomForm from "./CreateEditRoomForm";
 import { useState } from "react";
+import { useDeleteRoom } from "./useDeleteRoom";
 
 const TableRow = styled.div`
   display: grid;
@@ -75,23 +73,11 @@ const BtnsWrapper = styled.div`
 function RoomRow({ room }) {
   const { id, name, maxCapacity, regularPrice, discount, img } = room;
   const [showForm, setShowForm] = useState(false);
-
-  const queryClient = useQueryClient();
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: deleteRoom,
-    onSuccess: () => {
-      toast.success("You've successfully deleted the room!");
-      queryClient.invalidateQueries({
-        queryKey: ["rooms"],
-      });
-    },
-    onError: (e) => toast.error(e.message),
-  });
+  const { isDeleting, deleteRoomMut } = useDeleteRoom();
 
   function deleteHandle() {
     if (window.confirm(`Are you sure you want to delete ${name} room?`))
-      mutate(id);
+      deleteRoomMut(id);
   }
 
   return (
@@ -104,12 +90,14 @@ function RoomRow({ room }) {
         {discount !== 0 ? <Discount>${discount}</Discount> : "—"}
         <BtnsWrapper>
           <Edit onClick={() => setShowForm((show) => !show)}>Edit</Edit>
-          <Delete onClick={deleteHandle} disabled={isPending}>
+          <Delete onClick={deleteHandle} disabled={isDeleting}>
             Delete
           </Delete>
         </BtnsWrapper>
       </TableRow>
-      {showForm && <CreateEditRoomForm roomToEdit={room} onClose={setShowForm} />}
+      {showForm && (
+        <CreateEditRoomForm roomToEdit={room} onClose={setShowForm} />
+      )}
     </>
   );
 }

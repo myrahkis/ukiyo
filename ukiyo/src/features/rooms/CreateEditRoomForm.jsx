@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { createEditRoom } from "../../services/apiRooms";
-import toast from "react-hot-toast";
 import FormRow from "../../ui/FormRow";
+import { useCreateRoom } from "./useCreateRoom";
+import { useEditRoom } from "./useEditRoom";
 
 const Modal = styled.div`
   display: flex;
@@ -119,7 +118,9 @@ const Button = styled.button`
 function CreateEditRoomForm({ roomToEdit = {}, onClose }) {
   const { id: editId, ...editValues } = roomToEdit;
   const isEditSession = Boolean(editId);
-  const queryClient = useQueryClient();
+  const { isCreating, createRoom } = useCreateRoom();
+  const { isEditing, editRoom } = useEditRoom();
+
   const {
     register,
     handleSubmit,
@@ -127,41 +128,32 @@ function CreateEditRoomForm({ roomToEdit = {}, onClose }) {
     getValues,
     formState: { errors },
   } = useForm({ defaultValues: isEditSession ? editValues : {} });
-  const { mutate: createRoom, isPending } = useMutation({
-    mutationFn: createEditRoom,
-    onSuccess: () => {
-      toast.success("New room was added!");
-      queryClient.invalidateQueries({
-        queryKey: ["rooms"],
-      });
-      reset();
-    },
-    onError: () => {
-      toast.error("Failed to add a new room!");
-    },
-  });
 
-  const { mutate: editRoom, isPending: isEditing } = useMutation({
-    mutationFn: ({ newRoomData, id }) => createEditRoom(newRoomData, id),
-    onSuccess: () => {
-      toast.success("The room was edited!");
-      queryClient.invalidateQueries({
-        queryKey: ["rooms"],
-      });
-      reset();
-    },
-    onError: () => {
-      toast.error("Failed to edit the room!");
-    },
-  });
-
-  const isWorking = isPending || isEditing;
+  const isWorking = isCreating || isEditing;
 
   function onSubmit(data) {
     const img = typeof data.img === "string" ? data.img : data.img[0];
 
-    if (isEditSession) editRoom({ newRoomData: { ...data, img }, id: editId });
-    else createRoom({ ...data, img: img });
+    if (isEditSession)
+      editRoom(
+        { newRoomData: { ...data, img }, id: editId },
+        {
+          onSuccess: () => {
+            reset();
+            onClose(false);
+          },
+        } 
+      );
+    else
+      createRoom(
+        { ...data, img: img },
+        {
+          onSuccess: () => {
+            reset();
+            onClose(false);
+          },
+        }
+      );
   }
 
   return (
