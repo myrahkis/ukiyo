@@ -36,7 +36,7 @@ function Rooms() {
       </Heading>
       <RoomTable />
       <button onClick={() => setIsOpen((open) => !open)}>Add new room</button>
-      {isOpen && <CreateRoomForm />}
+      {isOpen && <CreateRoomForm onClose={setIsOpen} />}
     </div>
   );
 }

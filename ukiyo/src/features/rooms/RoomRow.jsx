@@ -109,7 +109,7 @@ function RoomRow({ room }) {
           </Delete>
         </BtnsWrapper>
       </TableRow>
-      {showForm && <CreateEditRoomForm roomToEdit={room} />}
+      {showForm && <CreateEditRoomForm roomToEdit={room} onClose={setShowForm} />}
     </>
   );
 }
