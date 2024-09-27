@@ -1,6 +1,8 @@
 import { useSettings } from "./useSettings";
+import { useUpdateSettings } from "./useUpdateSettings";
 
 function UpdateSettingsForm() {
+  const { isUpdating, updSettings } = useUpdateSettings();
   const {
     isLoading,
     settings: {
@@ -10,6 +12,15 @@ function UpdateSettingsForm() {
       breakfastPrice,
     } = {},
   } = useSettings();
+  const isWorking = isLoading || isUpdating;
+
+  function handleUpd(e, field) {
+    const { value } = e.target;
+
+    if (!value) return;
+
+    updSettings({ [field]: value });
+  }
 
   return (
     <form>
@@ -19,7 +30,8 @@ function UpdateSettingsForm() {
           type="number"
           id="minBookingLength"
           defaultValue={minBookingLength}
-          //   disabled={isLoading}
+          onBlur={(e) => handleUpd(e, "minBookingLength")}
+          disabled={isWorking}
         />
       </div>
       <div>
@@ -28,7 +40,8 @@ function UpdateSettingsForm() {
           type="number"
           id="maxBookingLength"
           defaultValue={maxBookingLength}
-          //   disabled={isLoading}
+          onBlur={(e) => handleUpd(e, "maxBookingLength")}
+          disabled={isWorking}
         />
       </div>
       <div>
@@ -37,7 +50,8 @@ function UpdateSettingsForm() {
           type="number"
           id="maxGuestsPerBooking"
           defaultValue={maxGuestsPerBooking}
-          //   disabled={isLoading}
+          onBlur={(e) => handleUpd(e, "maxGuestsPerBooking")}
+          disabled={isWorking}
         />
       </div>
       <div>
@@ -46,7 +60,8 @@ function UpdateSettingsForm() {
           type="number"
           id="breakfastPrice"
           defaultValue={breakfastPrice}
-          //   disabled={isLoading}
+          onBlur={(e) => handleUpd(e, "breakfastPrice")}
+          disabled={isWorking}
         />
       </div>
     </form>
