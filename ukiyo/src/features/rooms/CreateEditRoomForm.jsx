@@ -117,9 +117,9 @@ const Button = styled.button`
 
 function CreateEditRoomForm({ roomToEdit = {}, onClose }) {
   const { id: editId, ...editValues } = roomToEdit;
-  const isEditSession = Boolean(editId);
   const { isCreating, createRoom } = useCreateRoom();
   const { isEditing, editRoom } = useEditRoom();
+  const isEditSession = Boolean(editId);
 
   const {
     register,
@@ -142,7 +142,7 @@ function CreateEditRoomForm({ roomToEdit = {}, onClose }) {
             reset();
             onClose(false);
           },
-        } 
+        }
       );
     else
       createRoom(

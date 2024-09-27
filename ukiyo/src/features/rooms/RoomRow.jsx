@@ -3,6 +3,7 @@ import styled from "styled-components";
 import CreateEditRoomForm from "./CreateEditRoomForm";
 import { useState } from "react";
 import { useDeleteRoom } from "./useDeleteRoom";
+import { useCreateRoom } from "./useCreateRoom";
 
 const TableRow = styled.div`
   display: grid;
@@ -65,19 +66,46 @@ const Edit = styled.button`
   }
 `;
 
+const Copy = styled.button`
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: var(--emphasis-color);
+  color: var(--light-text-color);
+
+  &:hover {
+    background-color: var(--dark-emphasis-color);
+    transition: background-color 0.35s;
+  }
+`;
+
 const BtnsWrapper = styled.div`
   display: flex;
   gap: 1rem;
 `;
 
 function RoomRow({ room }) {
-  const { id, name, maxCapacity, regularPrice, discount, img } = room;
+  const { id, name, maxCapacity, regularPrice, discount, img, description } =
+    room;
   const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteRoomMut } = useDeleteRoom();
+  const { isCreating, createRoom } = useCreateRoom();
 
   function deleteHandle() {
     if (window.confirm(`Are you sure you want to delete ${name} room?`))
       deleteRoomMut(id);
+  }
+
+  function copyHandle() {
+    createRoom({
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      img,
+      description,
+    });
   }
 
   return (
@@ -93,6 +121,7 @@ function RoomRow({ room }) {
           <Delete onClick={deleteHandle} disabled={isDeleting}>
             Delete
           </Delete>
+          <Copy onClick={copyHandle}>Copy</Copy>
         </BtnsWrapper>
       </TableRow>
       {showForm && (
