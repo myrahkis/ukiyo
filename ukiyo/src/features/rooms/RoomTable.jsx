@@ -6,7 +6,8 @@ import RoomRow from "./RoomRow";
 const Table = styled.div`
   overflow: hidden;
   border: 1px solid var(--main-color);
-  border-radius: 1.5rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   background-color: #c4d6c6;
 `;
 

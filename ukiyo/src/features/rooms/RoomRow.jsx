@@ -4,6 +4,7 @@ import CreateEditRoomForm from "./CreateEditRoomForm";
 import { useState } from "react";
 import { useDeleteRoom } from "./useDeleteRoom";
 import { useCreateRoom } from "./useCreateRoom";
+import Modal from "../../ui/Modal";
 
 const TableRow = styled.div`
   display: grid;
@@ -119,7 +120,9 @@ function RoomRow({ room }) {
         </BtnsWrapper>
       </TableRow>
       {showForm && (
-        <CreateEditRoomForm roomToEdit={room} onClose={setShowForm} />
+        <Modal onClose={setShowForm}>
+          <CreateEditRoomForm roomToEdit={room} onClose={setShowForm} />
+        </Modal>
       )}
     </>
   );

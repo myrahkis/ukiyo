@@ -40,6 +40,10 @@ const GlobalStyles = createGlobalStyle`
         &:disabled {
             cursor: not-allowed;
             background-color: var(--disabled-color);
+
+            &:hover {
+                background-color: var(--disabled-color);
+            }
         }
     }
 `;
