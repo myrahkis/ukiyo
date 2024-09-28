@@ -13,6 +13,7 @@ const GlobalStyles = createGlobalStyle`
         --success-color: #259651;
         --danger-color: #c23036;
         --dark-danger-color: #a0001e;
+        --disabled-color: #98afba;
     }
 
     * {
@@ -35,6 +36,11 @@ const GlobalStyles = createGlobalStyle`
 
     button {
         cursor: pointer;
+
+        &:disabled {
+            cursor: not-allowed;
+            background-color: var(--disabled-color);
+        }
     }
 `;
 

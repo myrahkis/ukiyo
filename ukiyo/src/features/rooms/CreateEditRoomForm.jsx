@@ -18,6 +18,7 @@ const Modal = styled.div`
   height: 100%;
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.521);
+  backdrop-filter: blur(2px);
 `;
 
 const Form = styled.form`

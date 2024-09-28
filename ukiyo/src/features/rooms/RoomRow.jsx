@@ -52,21 +52,7 @@ const Delete = styled.button`
   }
 `;
 
-const Edit = styled.button`
-  width: fit-content;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 1rem;
-  background-color: var(--emphasis-color);
-  color: var(--light-text-color);
-
-  &:hover {
-    background-color: var(--dark-emphasis-color);
-    transition: background-color 0.35s;
-  }
-`;
-
-const Copy = styled.button`
+const EditCopy = styled.button`
   width: fit-content;
   padding: 0.5rem 1rem;
   border: none;
@@ -91,6 +77,7 @@ function RoomRow({ room }) {
   const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteRoomMut } = useDeleteRoom();
   const { isCreating, createRoom } = useCreateRoom();
+  const isWorking = isDeleting || isCreating;
 
   function deleteHandle() {
     if (window.confirm(`Are you sure you want to delete ${name} room?`))
@@ -117,11 +104,18 @@ function RoomRow({ room }) {
         <Price>${regularPrice}</Price>
         {discount !== 0 ? <Discount>${discount}</Discount> : "—"}
         <BtnsWrapper>
-          <Edit onClick={() => setShowForm((show) => !show)}>Edit</Edit>
-          <Delete onClick={deleteHandle} disabled={isDeleting}>
+          <EditCopy
+            onClick={() => setShowForm((show) => !show)}
+            disabled={isWorking}
+          >
+            Edit
+          </EditCopy>
+          <EditCopy onClick={copyHandle} disabled={isWorking}>
+            Copy
+          </EditCopy>
+          <Delete onClick={deleteHandle} disabled={isWorking}>
             Delete
           </Delete>
-          <Copy onClick={copyHandle}>Copy</Copy>
         </BtnsWrapper>
       </TableRow>
       {showForm && (
