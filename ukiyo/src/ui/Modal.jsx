@@ -1,12 +1,5 @@
 /* eslint-disable react/prop-types */
-import {
-  cloneElement,
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import useOutsideClick from "../hooks/useOutsideClick";
@@ -81,7 +74,7 @@ function Window({ children, name }) {
     <Blur>
       <StyledModal ref={ref}>
         <Close onClick={close}>X</Close>
-        <div>{children}</div>
+        <div>{cloneElement(children, { onClose: close })}</div>
       </StyledModal>
     </Blur>,
     document.body

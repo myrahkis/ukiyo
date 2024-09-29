@@ -4,6 +4,7 @@ import CreateEditRoomForm from "./CreateEditRoomForm";
 import { useDeleteRoom } from "./useDeleteRoom";
 import { useCreateRoom } from "./useCreateRoom";
 import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 const TableRow = styled.div`
   display: grid;
@@ -79,8 +80,7 @@ function RoomRow({ room }) {
   const isWorking = isDeleting || isCreating;
 
   function deleteHandle() {
-    if (window.confirm(`Are you sure you want to delete ${name} room?`))
-      deleteRoomMut(id);
+    deleteRoomMut(id);
   }
 
   function copyHandle() {
@@ -103,20 +103,30 @@ function RoomRow({ room }) {
         <Price>${regularPrice}</Price>
         {discount !== 0 ? <Discount>${discount}</Discount> : "—"}
         <BtnsWrapper>
-          <Modal>
-            <Modal.Open opens="room-form">
-              <EditCopy disabled={isWorking}>Edit</EditCopy>
-            </Modal.Open>
-            <Modal.Window name="room-form">
-              <CreateEditRoomForm roomToEdit={room} />
-            </Modal.Window>
-          </Modal>
           <EditCopy onClick={copyHandle} disabled={isWorking}>
             Copy
           </EditCopy>
-          <Delete onClick={deleteHandle} disabled={isWorking}>
-            Delete
-          </Delete>
+          <Modal>
+            <Modal.Open opens="edit-form">
+              <EditCopy disabled={isWorking}>Edit</EditCopy>
+            </Modal.Open>
+            <Modal.Window name="edit-form">
+              <CreateEditRoomForm roomToEdit={room} />
+            </Modal.Window>
+
+            <Modal.Open opens="delete-confirm">
+              <Delete onClick={deleteHandle} disabled={isWorking}>
+                Delete
+              </Delete>
+            </Modal.Open>
+            <Modal.Window name="delete-confirm">
+              <ConfirmDelete
+                subject={name}
+                onConfirm={deleteHandle}
+                disabled={isWorking}
+              />
+            </Modal.Window>
+          </Modal>
         </BtnsWrapper>
       </TableRow>
     </>
