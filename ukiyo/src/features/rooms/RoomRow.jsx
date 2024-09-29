@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import CreateEditRoomForm from "./CreateEditRoomForm";
-import { useState } from "react";
 import { useDeleteRoom } from "./useDeleteRoom";
 import { useCreateRoom } from "./useCreateRoom";
 import Modal from "../../ui/Modal";
@@ -75,7 +74,6 @@ const BtnsWrapper = styled.div`
 function RoomRow({ room }) {
   const { id, name, maxCapacity, regularPrice, discount, img, description } =
     room;
-  const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteRoomMut } = useDeleteRoom();
   const { isCreating, createRoom } = useCreateRoom();
   const isWorking = isDeleting || isCreating;
@@ -105,12 +103,14 @@ function RoomRow({ room }) {
         <Price>${regularPrice}</Price>
         {discount !== 0 ? <Discount>${discount}</Discount> : "—"}
         <BtnsWrapper>
-          <EditCopy
-            onClick={() => setShowForm((show) => !show)}
-            disabled={isWorking}
-          >
-            Edit
-          </EditCopy>
+          <Modal>
+            <Modal.Open opens="room-form">
+              <EditCopy disabled={isWorking}>Edit</EditCopy>
+            </Modal.Open>
+            <Modal.Window name="room-form">
+              <CreateEditRoomForm roomToEdit={room} />
+            </Modal.Window>
+          </Modal>
           <EditCopy onClick={copyHandle} disabled={isWorking}>
             Copy
           </EditCopy>
@@ -119,11 +119,6 @@ function RoomRow({ room }) {
           </Delete>
         </BtnsWrapper>
       </TableRow>
-      {showForm && (
-        <Modal onClose={setShowForm}>
-          <CreateEditRoomForm roomToEdit={room} onClose={setShowForm} />
-        </Modal>
-      )}
     </>
   );
 }

@@ -1,12 +1,6 @@
-import { useState } from "react";
 import CreateEditRoomForm from "./CreateEditRoomForm";
 import styled from "styled-components";
 import Modal from "../../ui/Modal";
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 const Add = styled.button`
   width: 100%;
@@ -26,17 +20,15 @@ const Add = styled.button`
 `;
 
 function AddRoom() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <Wrapper>
-      <Add onClick={() => setIsOpen((open) => !open)}>Add new room</Add>
-      {isOpen && (
-        <Modal onClose={setIsOpen}>
-          <CreateEditRoomForm onClose={setIsOpen} />
-        </Modal>
-      )}
-    </Wrapper>
+    <Modal>
+      <Modal.Open opens="room-form">
+        <Add>Add new room</Add>
+      </Modal.Open>
+      <Modal.Window name="room-form">
+        <CreateEditRoomForm />
+      </Modal.Window>
+    </Modal>
   );
 }
 

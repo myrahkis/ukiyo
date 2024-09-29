@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 
@@ -47,16 +48,44 @@ const Close = styled.button`
   }
 `;
 
-function Modal({ children, onClose }) {
+const ModalContex = createContext();
+
+function Modal({ children }) {
+  const [openName, setOpenName] = useState("");
+
+  const close = () => setOpenName("");
+  const open = setOpenName;
+
+  return (
+    <ModalContex.Provider value={{ openName, close, open }}>
+      {children}
+    </ModalContex.Provider>
+  );
+}
+
+function Window({ children, name }) {
+  const { openName, close } = useContext(ModalContex);
+
+  if (name !== openName) return null;
+
   return createPortal(
     <Blur>
       <StyledModal>
-        <Close onClick={() => onClose(false)}>X</Close>
+        <Close onClick={close}>X</Close>
         <div>{children}</div>
       </StyledModal>
     </Blur>,
     document.body
   );
 }
+
+function Open({ children, opens }) {
+  const { open } = useContext(ModalContex);
+
+  return cloneElement(children, { onClick: () => open(opens) });
+}
+
+Modal.Open = Open;
+Modal.Window = Window;
 
 export default Modal;
