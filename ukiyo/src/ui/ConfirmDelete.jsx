@@ -45,7 +45,7 @@ const Cancel = styled.button`
   }
 `;
 
-function ConfirmDelete({ subject, onConfirm, disabled }) {
+function ConfirmDelete({ subject, onConfirm, onClose, disabled }) {
   return (
     <StyledConfirmDelete>
       <h2>Deletion confirmation.</h2>
@@ -54,7 +54,9 @@ function ConfirmDelete({ subject, onConfirm, disabled }) {
         be undone!
       </p>
       <BtnsWrapper>
-        <Cancel disabled={disabled}>Cancel</Cancel>
+        <Cancel onClick={onClose} disabled={disabled}>
+          Cancel
+        </Cancel>
         <Delete onClick={onConfirm} disabled={disabled}>
           Delete
         </Delete>
