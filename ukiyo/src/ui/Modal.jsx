@@ -1,7 +1,15 @@
 /* eslint-disable react/prop-types */
-import { cloneElement, createContext, useContext, useState } from "react";
+import {
+  cloneElement,
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
+import useOutsideClick from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
   display: flex;
@@ -65,12 +73,13 @@ function Modal({ children }) {
 
 function Window({ children, name }) {
   const { openName, close } = useContext(ModalContex);
+  const ref = useOutsideClick(close);
 
   if (name !== openName) return null;
 
   return createPortal(
     <Blur>
-      <StyledModal>
+      <StyledModal ref={ref}>
         <Close onClick={close}>X</Close>
         <div>{children}</div>
       </StyledModal>
