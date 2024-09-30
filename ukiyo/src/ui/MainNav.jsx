@@ -36,7 +36,7 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-const iconsStyles = { color: "#9fafa1", size: '10px' };
+const iconsStyles = { color: "var(--light-bg-color)", size: '10px' };
 
 function MainNav() {
   return (

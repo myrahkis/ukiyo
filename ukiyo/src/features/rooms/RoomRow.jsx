@@ -6,6 +6,9 @@ import { useCreateRoom } from "./useCreateRoom";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Menus from "../../ui/Menus";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaCopy, FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 const TableRow = styled.div`
   display: grid;
@@ -54,24 +57,23 @@ const Delete = styled.button`
   }
 `;
 
-const EditCopy = styled.button`
-  width: fit-content;
-  padding: 0.5rem 1rem;
+const MenuBtn = styled.button`
+  width: 100%;
+  height: 100%;
+  padding: 1rem 1.5rem;
   border: none;
-  border-radius: 1rem;
-  background-color: var(--emphasis-color);
+  background-color: transparent;
+  font-weight: 600;
   color: var(--light-text-color);
-
-  &:hover {
-    background-color: var(--dark-emphasis-color);
-    transition: background-color 0.35s;
-  }
 `;
 
 const BtnsWrapper = styled.div`
   display: flex;
   gap: 1rem;
 `;
+
+const iconStyle = { fontSize: "2rem" };
+const btnIconStyle = { color: "var(--light-text-color)", marginRight: "5px" };
 
 function RoomRow({ room }) {
   const { id, name, maxCapacity, regularPrice, discount, img, description } =
@@ -105,17 +107,24 @@ function RoomRow({ room }) {
         {discount !== 0 ? <Discount>${discount}</Discount> : "—"}
         <BtnsWrapper>
           <Menus.Menu>
-            <Menus.Toggle id={id} />
+            <Menus.Toggle
+              id={id}
+              icon={<BsThreeDotsVertical style={iconStyle} />}
+            />
             <Menus.List id={id}>
               <Menus.Button>
-                <EditCopy onClick={copyHandle} disabled={isWorking}>
+                <MenuBtn onClick={copyHandle} disabled={isWorking}>
+                  <FaCopy style={btnIconStyle} />
                   Copy
-                </EditCopy>
+                </MenuBtn>
               </Menus.Button>
               <Menus.Button>
                 <Modal>
                   <Modal.Open opens="edit-form">
-                    <EditCopy disabled={isWorking}>Edit</EditCopy>
+                    <MenuBtn disabled={isWorking}>
+                      <FaEdit style={btnIconStyle} />
+                      Edit
+                    </MenuBtn>
                   </Modal.Open>
                   <Modal.Window name="edit-form">
                     <CreateEditRoomForm roomToEdit={room} />
@@ -125,9 +134,10 @@ function RoomRow({ room }) {
               <Menus.Button>
                 <Modal>
                   <Modal.Open opens="delete-confirm">
-                    <Delete onClick={deleteHandle} disabled={isWorking}>
+                    <MenuBtn onClick={deleteHandle} disabled={isWorking}>
+                      <MdDelete style={btnIconStyle} />
                       Delete
-                    </Delete>
+                    </MenuBtn>
                   </Modal.Open>
                   <Modal.Window name="delete-confirm">
                     <ConfirmDelete

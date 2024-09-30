@@ -13,7 +13,7 @@ function useOutsideClick(handler) {
       }
 
       function handleScroll() {
-        console.log("Scrolling detected");
+        // console.log("Scrolling detected");
         handler(); // Закрытие меню при скролле
       }
 
@@ -22,8 +22,8 @@ function useOutsideClick(handler) {
       document.addEventListener("click", handleClick, true);
 
       return () => {
-        document.removeEventListener("click", handleClick, true);
         window.removeEventListener("scroll", handleScroll);
+        document.removeEventListener("click", handleClick, true);
       };
     },
     [handler]

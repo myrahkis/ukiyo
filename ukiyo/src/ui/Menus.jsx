@@ -3,15 +3,50 @@ import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import useOutsideClick from "../hooks/useOutsideClick";
-import { BsThreeDotsVertical } from "react-icons/bs";
 
 const StyledList = styled.ul`
+  overflow: hidden;
   position: fixed;
+  display: flex;
+  flex-direction: column;
   background-color: var(--main-color);
-  /* box-shadow: ; */
-  border-radius: 2rem;
+  box-shadow: 5px 4px 10px var(--main-color);
+  border: 2px solid var(--dark-bg-color);
+  border-radius: 1.5rem;
   top: ${(props) => props.position.y}px;
   right: ${(props) => props.position.x}px;
+`;
+
+const StyledToggle = styled.button`
+  background-color: transparent;
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem 0.8rem;
+
+  &:hover {
+    color: var(--light-text-color);
+    background-color: var(--main-color);
+    transition: all 0.2s ease-in;
+  }
+`;
+
+const StyledBtn = styled.li`
+  list-style: none;
+  border-bottom: 1px solid var(--dark-bg-color);
+
+  &:last-child {
+    border: none;
+
+    &:hover {
+      background-color: var(--dark-danger-color);
+      transition: background-color 0.2s;
+    }
+  }
+
+  &:hover {
+    background-color: var(--dark-bg-color);
+    transition: background-color 0.2s;
+  }
 `;
 
 const MenusContex = createContext();
@@ -36,7 +71,7 @@ function Menu({ children }) {
   return <div>{children}</div>;
 }
 
-function Toggle({ id }) {
+function Toggle({ id, icon }) {
   const { isOpenId, open, close, setPosition } = useContext(MenusContex);
 
   function clickHandle(e) {
@@ -50,11 +85,7 @@ function Toggle({ id }) {
     isOpenId === "" || isOpenId !== id ? open(id) : close();
   }
 
-  return (
-    <button onClick={clickHandle}>
-      <BsThreeDotsVertical />
-    </button>
-  );
+  return <StyledToggle onClick={clickHandle}>{icon}</StyledToggle>;
 }
 
 function List({ id, children }) {
@@ -74,7 +105,7 @@ function List({ id, children }) {
 }
 
 function Button({ children }) {
-  return <li>{children}</li>;
+  return <StyledBtn>{children}</StyledBtn>;
 }
 
 Menus.Menu = Menu;
