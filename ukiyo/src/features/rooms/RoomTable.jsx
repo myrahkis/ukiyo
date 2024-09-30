@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getRooms } from "../../services/apiRooms";
 import styled from "styled-components";
 import RoomRow from "./RoomRow";
+import Menus from "../../ui/Menus";
 
 const Table = styled.div`
   overflow: hidden;
@@ -34,6 +35,7 @@ function RoomTable() {
   if (isLoading) return <h1>Loading...</h1>;
 
   return (
+    <Menus>
       <Table role="table">
         <TableHeader role="row">
           <div></div>
@@ -47,6 +49,7 @@ function RoomTable() {
           <RoomRow key={room.id} room={room} />
         ))}
       </Table>
+    </Menus>
   );
 }
 

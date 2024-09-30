@@ -5,6 +5,7 @@ import { useDeleteRoom } from "./useDeleteRoom";
 import { useCreateRoom } from "./useCreateRoom";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
+import Menus from "../../ui/Menus";
 
 const TableRow = styled.div`
   display: grid;
@@ -103,30 +104,42 @@ function RoomRow({ room }) {
         <Price>${regularPrice}</Price>
         {discount !== 0 ? <Discount>${discount}</Discount> : "—"}
         <BtnsWrapper>
-          <EditCopy onClick={copyHandle} disabled={isWorking}>
-            Copy
-          </EditCopy>
-          <Modal>
-            <Modal.Open opens="edit-form">
-              <EditCopy disabled={isWorking}>Edit</EditCopy>
-            </Modal.Open>
-            <Modal.Window name="edit-form">
-              <CreateEditRoomForm roomToEdit={room} />
-            </Modal.Window>
-
-            <Modal.Open opens="delete-confirm">
-              <Delete onClick={deleteHandle} disabled={isWorking}>
-                Delete
-              </Delete>
-            </Modal.Open>
-            <Modal.Window name="delete-confirm">
-              <ConfirmDelete
-                subject={name}
-                onConfirm={deleteHandle}
-                disabled={isWorking}
-              />
-            </Modal.Window>
-          </Modal>
+          <Menus.Menu>
+            <Menus.Toggle id={id} />
+            <Menus.List id={id}>
+              <Menus.Button>
+                <EditCopy onClick={copyHandle} disabled={isWorking}>
+                  Copy
+                </EditCopy>
+              </Menus.Button>
+              <Menus.Button>
+                <Modal>
+                  <Modal.Open opens="edit-form">
+                    <EditCopy disabled={isWorking}>Edit</EditCopy>
+                  </Modal.Open>
+                  <Modal.Window name="edit-form">
+                    <CreateEditRoomForm roomToEdit={room} />
+                  </Modal.Window>
+                </Modal>
+              </Menus.Button>
+              <Menus.Button>
+                <Modal>
+                  <Modal.Open opens="delete-confirm">
+                    <Delete onClick={deleteHandle} disabled={isWorking}>
+                      Delete
+                    </Delete>
+                  </Modal.Open>
+                  <Modal.Window name="delete-confirm">
+                    <ConfirmDelete
+                      subject={name}
+                      onConfirm={deleteHandle}
+                      disabled={isWorking}
+                    />
+                  </Modal.Window>
+                </Modal>
+              </Menus.Button>
+            </Menus.List>
+          </Menus.Menu>
         </BtnsWrapper>
       </TableRow>
     </>
