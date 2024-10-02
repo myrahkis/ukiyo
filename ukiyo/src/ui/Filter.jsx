@@ -21,6 +21,7 @@ const FilterBtn = styled.button`
   ${(props) =>
     props.active &&
     css`
+      cursor: not-allowed;
       background-color: var(--emphasis-color);
       color: var(--light-text-color);
     `}

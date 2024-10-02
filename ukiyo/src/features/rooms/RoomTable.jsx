@@ -36,8 +36,8 @@ function RoomTable() {
 
   if (isLoading) return <h1>Loading...</h1>;
 
+  // filter
   const filterValue = searchParams.get("discount") || "all";
-
   let filteredRooms;
 
   switch (filterValue) {
@@ -52,6 +52,15 @@ function RoomTable() {
       break;
   }
 
+  // sort
+  const sortBy = searchParams.get("sortBy") || "startDate-asc";
+  const [field, direction] = sortBy.split("-");
+  console.log(field, direction);
+  const modifier = direction === "asc" ? 1 : -1;
+  const sortedRooms = filteredRooms.sort(
+    (a, b) => (a[field] - b[field]) * modifier
+  );
+
   return (
     <Menus>
       <Table role="table">
@@ -63,7 +72,7 @@ function RoomTable() {
           <div>Discount</div>
           <div></div>
         </TableHeader>
-        {filteredRooms.map((room) => (
+        {sortedRooms.map((room) => (
           <RoomRow key={room.id} room={room} />
         ))}
       </Table>
