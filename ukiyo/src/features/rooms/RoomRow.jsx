@@ -43,20 +43,6 @@ const Discount = styled.div`
   font-weight: 700;
 `;
 
-const Delete = styled.button`
-  width: fit-content;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 1rem;
-  background-color: var(--danger-color);
-  color: var(--light-text-color);
-
-  &:hover {
-    background-color: var(--dark-danger-color);
-    transition: background-color 0.35s;
-  }
-`;
-
 const MenuBtn = styled.button`
   width: 100%;
   height: 100%;
@@ -64,12 +50,8 @@ const MenuBtn = styled.button`
   border: none;
   background-color: transparent;
   font-weight: 600;
+  text-align: start;
   color: var(--light-text-color);
-`;
-
-const BtnsWrapper = styled.div`
-  display: flex;
-  gap: 1rem;
 `;
 
 const iconStyle = { fontSize: "2rem" };
@@ -105,52 +87,50 @@ function RoomRow({ room }) {
         <div>Up to {maxCapacity} people</div>
         <Price>${regularPrice}</Price>
         {discount !== 0 ? <Discount>${discount}</Discount> : "—"}
-        <BtnsWrapper>
-          <Menus.Menu>
-            <Menus.Toggle
-              id={id}
-              icon={<BsThreeDotsVertical style={iconStyle} />}
-            />
-            <Menus.List id={id}>
-              <Menus.Button>
-                <MenuBtn onClick={copyHandle} disabled={isWorking}>
-                  <FaCopy style={btnIconStyle} />
-                  Copy
-                </MenuBtn>
-              </Menus.Button>
-              <Menus.Button>
-                <Modal>
-                  <Modal.Open opens="edit-form">
-                    <MenuBtn disabled={isWorking}>
-                      <FaEdit style={btnIconStyle} />
-                      Edit
-                    </MenuBtn>
-                  </Modal.Open>
-                  <Modal.Window name="edit-form">
-                    <CreateEditRoomForm roomToEdit={room} />
-                  </Modal.Window>
-                </Modal>
-              </Menus.Button>
-              <Menus.Button>
-                <Modal>
-                  <Modal.Open opens="delete-confirm">
-                    <MenuBtn onClick={deleteHandle} disabled={isWorking}>
-                      <MdDelete style={btnIconStyle} />
-                      Delete
-                    </MenuBtn>
-                  </Modal.Open>
-                  <Modal.Window name="delete-confirm">
-                    <ConfirmDelete
-                      subject={name}
-                      onConfirm={deleteHandle}
-                      disabled={isWorking}
-                    />
-                  </Modal.Window>
-                </Modal>
-              </Menus.Button>
-            </Menus.List>
-          </Menus.Menu>
-        </BtnsWrapper>
+        <Menus.Menu>
+          <Menus.Toggle
+            id={id}
+            icon={<BsThreeDotsVertical style={iconStyle} />}
+          />
+          <Menus.List id={id}>
+            <Menus.Button>
+              <MenuBtn onClick={copyHandle} disabled={isWorking}>
+                <FaCopy style={btnIconStyle} />
+                Copy
+              </MenuBtn>
+            </Menus.Button>
+            <Menus.Button>
+              <Modal>
+                <Modal.Open opens="edit-form">
+                  <MenuBtn disabled={isWorking}>
+                    <FaEdit style={btnIconStyle} />
+                    Edit
+                  </MenuBtn>
+                </Modal.Open>
+                <Modal.Window name="edit-form">
+                  <CreateEditRoomForm roomToEdit={room} />
+                </Modal.Window>
+              </Modal>
+            </Menus.Button>
+            <Menus.Button>
+              <Modal>
+                <Modal.Open opens="delete-confirm">
+                  <MenuBtn onClick={deleteHandle} disabled={isWorking}>
+                    <MdDelete style={btnIconStyle} />
+                    Delete
+                  </MenuBtn>
+                </Modal.Open>
+                <Modal.Window name="delete-confirm">
+                  <ConfirmDelete
+                    subject={name}
+                    onConfirm={deleteHandle}
+                    disabled={isWorking}
+                  />
+                </Modal.Window>
+              </Modal>
+            </Menus.Button>
+          </Menus.List>
+        </Menus.Menu>
       </TableRow>
     </>
   );

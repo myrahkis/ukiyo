@@ -3,13 +3,14 @@ import { getRooms } from "../../services/apiRooms";
 import styled from "styled-components";
 import RoomRow from "./RoomRow";
 import Menus from "../../ui/Menus";
+import { useSearchParams } from "react-router-dom";
 
 const Table = styled.div`
   overflow: hidden;
   border: 1px solid var(--main-color);
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
-  background-color: #c4d6c6;
+  background-color: var(--lightest-bg-color);
 `;
 
 const TableHeader = styled.header`
@@ -31,8 +32,25 @@ function RoomTable() {
     data: rooms,
     error,
   } = useQuery({ queryKey: ["rooms"], queryFn: getRooms });
+  const [searchParams] = useSearchParams();
 
   if (isLoading) return <h1>Loading...</h1>;
+
+  const filterValue = searchParams.get("discount") || "all";
+
+  let filteredRooms;
+
+  switch (filterValue) {
+    case "all":
+      filteredRooms = rooms;
+      break;
+    case "with-discount":
+      filteredRooms = rooms.filter((room) => room.discount > 0);
+      break;
+    case "no-discount":
+      filteredRooms = rooms.filter((room) => room.discount === 0);
+      break;
+  }
 
   return (
     <Menus>
@@ -45,7 +63,7 @@ function RoomTable() {
           <div>Discount</div>
           <div></div>
         </TableHeader>
-        {rooms.map((room) => (
+        {filteredRooms.map((room) => (
           <RoomRow key={room.id} room={room} />
         ))}
       </Table>
