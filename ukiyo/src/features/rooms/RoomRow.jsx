@@ -80,59 +80,57 @@ function RoomRow({ room }) {
   }
 
   return (
-    <>
-      <TableRow role="row">
-        <Img src={img} />
-        <div>{name}</div>
-        <div>Up to {maxCapacity} people</div>
-        <Price>${regularPrice}</Price>
-        {discount !== 0 ? <Discount>${discount}</Discount> : "—"}
-        <Menus.Menu>
-          <Menus.Toggle
-            id={id}
-            icon={<BsThreeDotsVertical style={iconStyle} />}
-          />
-          <Menus.List id={id}>
-            <Menus.Button>
-              <MenuBtn onClick={copyHandle} disabled={isWorking}>
-                <FaCopy style={btnIconStyle} />
-                Copy
-              </MenuBtn>
-            </Menus.Button>
-            <Menus.Button>
-              <Modal>
-                <Modal.Open opens="edit-form">
-                  <MenuBtn disabled={isWorking}>
-                    <FaEdit style={btnIconStyle} />
-                    Edit
-                  </MenuBtn>
-                </Modal.Open>
-                <Modal.Window name="edit-form">
-                  <CreateEditRoomForm roomToEdit={room} />
-                </Modal.Window>
-              </Modal>
-            </Menus.Button>
-            <Menus.Button>
-              <Modal>
-                <Modal.Open opens="delete-confirm">
-                  <MenuBtn onClick={deleteHandle} disabled={isWorking}>
-                    <MdDelete style={btnIconStyle} />
-                    Delete
-                  </MenuBtn>
-                </Modal.Open>
-                <Modal.Window name="delete-confirm">
-                  <ConfirmDelete
-                    subject={name}
-                    onConfirm={deleteHandle}
-                    disabled={isWorking}
-                  />
-                </Modal.Window>
-              </Modal>
-            </Menus.Button>
-          </Menus.List>
-        </Menus.Menu>
-      </TableRow>
-    </>
+    <TableRow role="row">
+      <Img src={img} />
+      <div>{name}</div>
+      <div>Up to {maxCapacity} people</div>
+      <Price>${regularPrice}</Price>
+      {discount !== 0 ? <Discount>${discount}</Discount> : "—"}
+      <Menus.Menu>
+        <Menus.Toggle
+          id={id}
+          icon={<BsThreeDotsVertical style={iconStyle} />}
+        />
+        <Menus.List id={id}>
+          <Menus.Button>
+            <MenuBtn onClick={copyHandle} disabled={isWorking}>
+              <FaCopy style={btnIconStyle} />
+              Copy
+            </MenuBtn>
+          </Menus.Button>
+          <Menus.Button>
+            <Modal>
+              <Modal.Open opens="edit-form">
+                <MenuBtn disabled={isWorking}>
+                  <FaEdit style={btnIconStyle} />
+                  Edit
+                </MenuBtn>
+              </Modal.Open>
+              <Modal.Window name="edit-form">
+                <CreateEditRoomForm roomToEdit={room} />
+              </Modal.Window>
+            </Modal>
+          </Menus.Button>
+          <Menus.Button>
+            <Modal>
+              <Modal.Open opens="delete-confirm">
+                <MenuBtn onClick={deleteHandle} disabled={isWorking}>
+                  <MdDelete style={btnIconStyle} />
+                  Delete
+                </MenuBtn>
+              </Modal.Open>
+              <Modal.Window name="delete-confirm">
+                <ConfirmDelete
+                  subject={name}
+                  onConfirm={deleteHandle}
+                  disabled={isWorking}
+                />
+              </Modal.Window>
+            </Modal>
+          </Menus.Button>
+        </Menus.List>
+      </Menus.Menu>
+    </TableRow>
   );
 }
 

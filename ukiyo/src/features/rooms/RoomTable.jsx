@@ -72,9 +72,11 @@ function RoomTable() {
           <div>Discount</div>
           <div></div>
         </TableHeader>
-        {sortedRooms.map((room) => (
-          <RoomRow key={room.id} room={room} />
-        ))}
+        {sortedRooms.length === 0 ? (
+          <h1>Theres is no data to show.</h1>
+        ) : (
+          sortedRooms.map((room) => <RoomRow key={room.id} room={room} />)
+        )}
       </Table>
     </Menus>
   );

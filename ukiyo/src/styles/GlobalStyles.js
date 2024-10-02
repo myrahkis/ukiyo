@@ -7,6 +7,7 @@ const GlobalStyles = createGlobalStyle`
         --light-emphasis-color: #708f9f;
         --dark-emphasis-color: #354a54;
         --light-text-color: #f3fcf4;
+        --success-emphasis-color: #358f81;
         --dark-text-color: #182c1d;
         --light-bg-color: #9fafa1;
         --lightest-bg-color: #c4d6c6;

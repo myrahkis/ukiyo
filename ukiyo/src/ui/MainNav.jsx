@@ -49,7 +49,7 @@ function MainNav() {
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/booking">
+          <StyledNavLink to="/bookings">
             <TbBookmarksFilled style={iconsStyles} />
             <span>Bookings</span>
           </StyledNavLink>
