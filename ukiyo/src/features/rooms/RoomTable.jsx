@@ -4,6 +4,7 @@ import styled from "styled-components";
 import RoomRow from "./RoomRow";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
+import EmptyTable from "../../ui/EmptyTable";
 
 const Table = styled.div`
   overflow: hidden;
@@ -55,11 +56,22 @@ function RoomTable() {
   // sort
   const sortBy = searchParams.get("sortBy") || "startDate-asc";
   const [field, direction] = sortBy.split("-");
-  console.log(field, direction);
+
   const modifier = direction === "asc" ? 1 : -1;
-  const sortedRooms = filteredRooms.sort(
-    (a, b) => (a[field] - b[field]) * modifier
-  );
+  const sortedRooms = filteredRooms.sort((a, b) => {
+    const valA = a[field];
+    const valB = b[field];
+
+    if (typeof valA === "number" && typeof valB === "number") {
+      // Сравнение чисел
+      return (valA - valB) * modifier;
+    } else if (typeof valA === "string" && typeof valB === "string") {
+      // Сравнение строк
+      return valA.localeCompare(valB) * modifier;
+    }
+  });
+
+  if (sortedRooms.length === 0) return <EmptyTable sub="rooms" />;
 
   return (
     <Menus>

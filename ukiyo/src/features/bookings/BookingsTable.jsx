@@ -3,6 +3,8 @@ import Menus from "../../ui/Menus";
 import BookingRow from "./BookingRow";
 import { useQuery } from "@tanstack/react-query";
 import { getBookings } from "../../services/apiBookings";
+import { useSearchParams } from "react-router-dom";
+import EmptyTable from "../../ui/EmptyTable";
 
 const Table = styled.div`
   overflow: hidden;
@@ -26,13 +28,32 @@ const TableHeader = styled.header`
 `;
 
 function BookingsTable() {
+  const [searchParams] = useSearchParams();
+
+  // filter
+  const filterValue = searchParams.get("status");
+  let filter =
+    !filterValue || filterValue === "all"
+      ? null
+      : { field: "status", value: filterValue };
+
+  // sorting
+  const sortByRaw = searchParams.get("sortBy") || "startDate-asc";
+  let [field, direction] = sortByRaw.split("-");
+  const sortBy = { field, direction };
+
   const {
     isLoading,
     data: bookings,
     error,
-  } = useQuery({ queryKey: ["bookings"], queryFn: getBookings });
+  } = useQuery({
+    queryKey: ["bookings", filter, sortBy],
+    queryFn: () => getBookings({ filter, sortBy }),
+  });
 
   if (isLoading) return <h1>Loading...</h1>;
+
+  if (bookings.length === 0) return <EmptyTable sub="bookings" />;
 
   return (
     <Menus>
