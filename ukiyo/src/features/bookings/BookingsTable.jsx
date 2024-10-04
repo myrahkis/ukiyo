@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import Menus from "../../ui/Menus";
 import BookingRow from "./BookingRow";
-import { useQuery } from "@tanstack/react-query";
-import { getBookings } from "../../services/apiBookings";
-import { useSearchParams } from "react-router-dom";
 import EmptyTable from "../../ui/EmptyTable";
 import Pagination from "../../ui/Pagination";
 import TableFooter from "../../ui/TableFooter";
+import useBooking from "./useBooking";
 
 const Table = styled.div`
   overflow: hidden;
@@ -36,31 +34,7 @@ const TableHeader = styled.header`
 `;
 
 function BookingsTable() {
-  const [searchParams] = useSearchParams();
-
-  // filter
-  const filterValue = searchParams.get("status");
-  let filter =
-    !filterValue || filterValue === "all"
-      ? null
-      : { field: "status", value: filterValue };
-
-  // sorting
-  const sortByRaw = searchParams.get("sortBy") || "startDate-asc";
-  let [field, direction] = sortByRaw.split("-");
-  const sortBy = { field, direction };
-
-  // pagination
-  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
-
-  const {
-    isLoading,
-    data: { bookings, count } = {},
-    error,
-  } = useQuery({
-    queryKey: ["bookings", filter, sortBy, page],
-    queryFn: () => getBookings({ filter, sortBy, page }),
-  });
+  const { isLoading, bookings, count, error } = useBooking();
 
   if (isLoading) return <h1>Loading...</h1>;
 
