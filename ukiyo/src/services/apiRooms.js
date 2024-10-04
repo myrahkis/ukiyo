@@ -1,16 +1,27 @@
+import { MAX_ROWS } from "../utils/constants";
 import supabase from "./supabase";
 
 const supabaseUrl = "https://pnornbaiwgyhxggydeci.supabase.co";
 
-export async function getRooms() {
-  const { data, error } = await supabase.from("rooms").select("*");
+export async function getRooms({ page }) {
+  let query = supabase.from("rooms").select("*", { count: "exact" });
+
+  // pagination
+  if (page) {
+    const from = (page - 1) * MAX_ROWS;
+    const to = from + MAX_ROWS - 1;
+
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
 
   if (error) {
     console.error(error);
     throw new Error("Couldn't load rooms!");
   }
 
-  return data;
+  return { data, count };
 }
 
 export async function deleteRoom(id) {

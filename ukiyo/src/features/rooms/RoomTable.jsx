@@ -5,6 +5,8 @@ import RoomRow from "./RoomRow";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
 import EmptyTable from "../../ui/EmptyTable";
+import TableFooter from "../../ui/TableFooter";
+import Pagination from "../../ui/Pagination";
 
 const Table = styled.div`
   overflow: hidden;
@@ -12,6 +14,7 @@ const Table = styled.div`
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
   background-color: var(--lightest-bg-color);
+  box-shadow: 0 0 1px black;
 `;
 
 const TableHeader = styled.header`
@@ -28,12 +31,19 @@ const TableHeader = styled.header`
 `;
 
 function RoomTable() {
+  const [searchParams] = useSearchParams();
+
+  // pagination
+  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+
   const {
     isLoading,
-    data: rooms,
+    data: { data: rooms, count } = {},
     error,
-  } = useQuery({ queryKey: ["rooms"], queryFn: getRooms });
-  const [searchParams] = useSearchParams();
+  } = useQuery({
+    queryKey: ["rooms", page],
+    queryFn: () => getRooms({ page }),
+  });
 
   if (isLoading) return <h1>Loading...</h1>;
 
@@ -84,11 +94,12 @@ function RoomTable() {
           <div>Discount</div>
           <div></div>
         </TableHeader>
-        {sortedRooms.length === 0 ? (
-          <h1>Theres is no data to show.</h1>
-        ) : (
-          sortedRooms.map((room) => <RoomRow key={room.id} room={room} />)
-        )}
+        {sortedRooms.map((room) => (
+          <RoomRow key={room.id} room={room} />
+        ))}
+        <TableFooter>
+          <Pagination count={count} />
+        </TableFooter>
       </Table>
     </Menus>
   );

@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getBookings } from "../../services/apiBookings";
 import { useSearchParams } from "react-router-dom";
 import EmptyTable from "../../ui/EmptyTable";
+import Pagination from "../../ui/Pagination";
+import TableFooter from "../../ui/TableFooter";
 
 const Table = styled.div`
   overflow: hidden;
@@ -12,6 +14,12 @@ const Table = styled.div`
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
   background-color: var(--lightest-bg-color);
+  box-shadow: 0 0 1px black;
+
+  &:last-child {
+    border-bottom-left-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+  }
 `;
 
 const TableHeader = styled.header`
@@ -42,13 +50,16 @@ function BookingsTable() {
   let [field, direction] = sortByRaw.split("-");
   const sortBy = { field, direction };
 
+  // pagination
+  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+
   const {
     isLoading,
-    data: bookings,
+    data: { bookings, count } = {},
     error,
   } = useQuery({
-    queryKey: ["bookings", filter, sortBy],
-    queryFn: () => getBookings({ filter, sortBy }),
+    queryKey: ["bookings", filter, sortBy, page],
+    queryFn: () => getBookings({ filter, sortBy, page }),
   });
 
   if (isLoading) return <h1>Loading...</h1>;
@@ -68,6 +79,9 @@ function BookingsTable() {
         {bookings.map((booking) => (
           <BookingRow key={booking.id} booking={booking} />
         ))}
+        <TableFooter>
+          <Pagination count={count} />
+        </TableFooter>
       </Table>
     </Menus>
   );
