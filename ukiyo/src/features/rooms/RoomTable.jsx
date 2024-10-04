@@ -1,5 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
-import { getRooms } from "../../services/apiRooms";
 import styled from "styled-components";
 import RoomRow from "./RoomRow";
 import Menus from "../../ui/Menus";
@@ -8,6 +6,7 @@ import EmptyTable from "../../ui/EmptyTable";
 import TableFooter from "../../ui/TableFooter";
 import Pagination from "../../ui/Pagination";
 import AddRoom from "./AddRoom";
+import useRooms from "./useRooms";
 
 const Table = styled.div`
   overflow: hidden;
@@ -38,18 +37,7 @@ const TableHeader = styled.header`
 
 function RoomTable() {
   const [searchParams] = useSearchParams();
-
-  // pagination
-  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
-
-  const {
-    isLoading,
-    data: { data: rooms, count } = {},
-    error,
-  } = useQuery({
-    queryKey: ["rooms", page],
-    queryFn: () => getRooms({ page }),
-  });
+  const { isLoading, rooms, count, error } = useRooms();
 
   if (isLoading) return <h1>Loading...</h1>;
 
