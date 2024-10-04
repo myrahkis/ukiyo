@@ -3,11 +3,10 @@ import styled from "styled-components";
 import Modal from "../../ui/Modal";
 
 const Add = styled.button`
-  width: 100%;
-  padding: 1rem 2rem;
+  width: 30%;
+  padding: 1rem 3rem;
   border: none;
-  border-bottom-left-radius: 1.5rem;
-  border-bottom-right-radius: 1.5rem;
+  border-radius: 1rem;
   background-color: var(--main-color);
   color: var(--light-text-color);
   font-size: 1.5rem;

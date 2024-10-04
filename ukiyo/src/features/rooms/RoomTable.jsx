@@ -7,6 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import EmptyTable from "../../ui/EmptyTable";
 import TableFooter from "../../ui/TableFooter";
 import Pagination from "../../ui/Pagination";
+import AddRoom from "./AddRoom";
 
 const Table = styled.div`
   overflow: hidden;
@@ -15,6 +16,11 @@ const Table = styled.div`
   border-top-right-radius: 1.5rem;
   background-color: var(--lightest-bg-color);
   box-shadow: 0 0 1px black;
+
+  &:last-child {
+    border-bottom-left-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+  }
 `;
 
 const TableHeader = styled.header`
@@ -98,6 +104,7 @@ function RoomTable() {
           <RoomRow key={room.id} room={room} />
         ))}
         <TableFooter>
+          <AddRoom />
           <Pagination count={count} />
         </TableFooter>
       </Table>

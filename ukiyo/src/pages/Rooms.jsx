@@ -1,5 +1,4 @@
 import RoomTable from "../features/rooms/RoomTable";
-import AddRoom from "../features/rooms/AddRoom";
 import RoomTableOperations from "../features/rooms/RoomTableOperations";
 import Heading from "../ui/Heading";
 
@@ -11,7 +10,7 @@ function Rooms() {
         <RoomTableOperations />
       </Heading>
       <RoomTable />
-      <AddRoom />
+      
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { MAX_ROWS } from "../utils/constants";
 const StyledPagination = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 60%;
   justify-content: space-between;
 `;
 
