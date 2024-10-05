@@ -10,6 +10,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaCopy, FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import TableRow from "../../ui/TableRow";
+import MenuBtn from "../../ui/MenuBtn";
 
 const Img = styled.img`
   display: block;
@@ -26,7 +27,7 @@ const Discount = styled.div`
   font-weight: 700;
 `;
 
-const MenuBtn = styled.button`
+const DeleteBtn = styled.button`
   width: 100%;
   height: 100%;
   padding: 1rem 1.5rem;
@@ -35,6 +36,13 @@ const MenuBtn = styled.button`
   font-weight: 600;
   text-align: start;
   color: var(--light-text-color);
+
+  border: none;
+
+  &:hover {
+    background-color: var(--dark-danger-color);
+    transition: background-color 0.2s;
+  }
 `;
 
 const iconStyle = { fontSize: "2rem" };
@@ -97,10 +105,10 @@ function RoomRow({ room }) {
           <Menus.Button>
             <Modal>
               <Modal.Open opens="delete-confirm">
-                <MenuBtn onClick={deleteHandle} disabled={isWorking}>
+                <DeleteBtn onClick={deleteHandle} disabled={isWorking}>
                   <MdDelete style={btnIconStyle} />
                   Delete
-                </MenuBtn>
+                </DeleteBtn>
               </Modal.Open>
               <Modal.Window name="delete-confirm">
                 <ConfirmDelete

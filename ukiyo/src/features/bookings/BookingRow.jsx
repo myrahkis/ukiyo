@@ -3,6 +3,13 @@ import { format, isToday } from "date-fns";
 import styled from "styled-components";
 import { formatDistanceFromNow } from "../../utils/helpers";
 import TableRow from "../../ui/TableRow";
+import Menus from "../../ui/Menus";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaBuildingCircleCheck } from "react-icons/fa6";
+import { CgDetailsMore } from "react-icons/cg";
+import MenuBtn from "../../ui/MenuBtn";
+import { useNavigate } from "react-router-dom";
+import Tag from "../../ui/Tag";
 
 const Room = styled.p``;
 
@@ -13,15 +20,7 @@ const Wrapper = styled.div`
 
 const Price = styled.div``;
 
-const Tag = styled.div`
-  width: fit-content;
-  padding: 1rem 1.5rem;
-  border-radius: 1.5rem;
-  text-transform: uppercase;
-  font-size: 1.2rem;
-  background-color: var(--${(props) => props.type}-emphasis-color);
-  color: var(--light-text-color);
-`;
+const iconStyle = { fontSize: "2rem" };
 
 function BookingRow({
   booking: {
@@ -36,6 +35,8 @@ function BookingRow({
     guests: { fullName, email },
   },
 }) {
+  const navigate = useNavigate();
+
   const statusColor = {
     unconfirmed: "light",
     "checked-in": "success",
@@ -43,7 +44,7 @@ function BookingRow({
   };
 
   return (
-    <TableRow role="row" columns="2fr 1fr 1.5fr 1fr 0.6fr">
+    <TableRow role="row" columns="2fr 1fr 1.5fr 0.9fr 0.4fr 0.2fr">
       <Room>{name}</Room>
       <Wrapper>
         <p>{fullName}</p>
@@ -63,6 +64,24 @@ function BookingRow({
       </Wrapper>
       <Tag type={statusColor[status]}>{status.replace("-", " ")}</Tag>
       <Price>${totalPrice}</Price>
+      <Menus.Menu>
+        <Menus.Toggle
+          id={id}
+          icon={<BsThreeDotsVertical style={iconStyle} />}
+        />
+        <Menus.List id={id}>
+          <Menus.Button>
+            <MenuBtn onClick={() => navigate(`/bookings/${id}`)}>
+              <CgDetailsMore /> See details
+            </MenuBtn>
+          </Menus.Button>
+          {status === 'unconfirmed' && <Menus.Button>
+            <MenuBtn onClick={() => navigate(`/bookings/${id}`)}>
+              <FaBuildingCircleCheck /> Check in
+            </MenuBtn>
+          </Menus.Button>}
+        </Menus.List>
+      </Menus.Menu>
     </TableRow>
   );
 }

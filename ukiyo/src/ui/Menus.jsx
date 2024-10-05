@@ -34,15 +34,6 @@ const StyledBtn = styled.li`
   list-style: none;
   border-bottom: 1px solid var(--dark-bg-color);
 
-  &:last-child {
-    border: none;
-
-    &:hover {
-      background-color: var(--dark-danger-color);
-      transition: background-color 0.2s;
-    }
-  }
-
   &:hover {
     background-color: var(--dark-bg-color);
     transition: background-color 0.2s;

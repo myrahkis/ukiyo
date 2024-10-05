@@ -40,7 +40,7 @@ export async function getBooking(id) {
     .eq("id", id)
     .single();
 
-  if (error) throw new Error("Couldn't load bookings!");
+  if (error) throw new Error(`Couldn't load booking ${id}!`);
 
   return data;
 }
