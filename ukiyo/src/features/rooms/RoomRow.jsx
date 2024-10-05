@@ -9,24 +9,7 @@ import Menus from "../../ui/Menus";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaCopy, FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-
-const TableRow = styled.div`
-  display: grid;
-  grid-template-columns: 0.6fr 2fr 1.2fr 0.8fr 0.8fr 0.6fr;
-  column-gap: 2rem;
-  align-items: center;
-  padding: 1rem 2.5rem;
-  color: var(--dark-text-color);
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--emphasis-color);
-  }
-
-  &:hover {
-    background-color: var(--light-bg-color);
-    transition: background-color 0.3s;
-  }
-`;
+import TableRow from "../../ui/TableRow";
 
 const Img = styled.img`
   display: block;
@@ -80,7 +63,7 @@ function RoomRow({ room }) {
   }
 
   return (
-    <TableRow role="row">
+    <TableRow role="row" columns="0.6fr 2fr 1.2fr 0.8fr 0.8fr 0.6fr">
       <Img src={img} />
       <div>{name}</div>
       <div>Up to {maxCapacity} people</div>

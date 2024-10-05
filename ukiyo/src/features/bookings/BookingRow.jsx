@@ -2,24 +2,7 @@
 import { format, isToday } from "date-fns";
 import styled from "styled-components";
 import { formatDistanceFromNow } from "../../utils/helpers";
-
-const TableRow = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1fr 1.5fr 1fr 0.6fr;
-  column-gap: 2rem;
-  align-items: center;
-  padding: 1rem 2.5rem;
-  color: var(--dark-text-color);
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--emphasis-color);
-  }
-
-  &:hover {
-    background-color: var(--light-bg-color);
-    transition: background-color 0.3s;
-  }
-`;
+import TableRow from "../../ui/TableRow";
 
 const Room = styled.p``;
 
@@ -60,7 +43,7 @@ function BookingRow({
   };
 
   return (
-    <TableRow role="row">
+    <TableRow role="row" columns="2fr 1fr 1.5fr 1fr 0.6fr">
       <Room>{name}</Room>
       <Wrapper>
         <p>{fullName}</p>
@@ -71,7 +54,7 @@ function BookingRow({
           {isToday(new Date(startDate))
             ? "Today"
             : formatDistanceFromNow(startDate)}{" "}
-           &rarr; {numNights} night stay
+          &rarr; {numNights} night stay
         </p>
         <p>
           {format(new Date(startDate), "MMM dd yyyy")} &mdash;{" "}

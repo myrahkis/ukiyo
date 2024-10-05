@@ -7,33 +7,8 @@ import TableFooter from "../../ui/TableFooter";
 import Pagination from "../../ui/Pagination";
 import AddRoom from "./AddRoom";
 import useRooms from "./useRooms";
-
-const Table = styled.div`
-  overflow: hidden;
-  border: 1px solid var(--main-color);
-  border-top-left-radius: 1.5rem;
-  border-top-right-radius: 1.5rem;
-  background-color: var(--lightest-bg-color);
-  box-shadow: 0 0 1px black;
-
-  &:last-child {
-    border-bottom-left-radius: 1.5rem;
-    border-bottom-right-radius: 1.5rem;
-  }
-`;
-
-const TableHeader = styled.header`
-  display: grid;
-  grid-template-columns: 0.6fr 2fr 1.2fr 0.8fr 0.8fr 0.6fr;
-  column-gap: 2rem;
-  align-items: center;
-  text-transform: uppercase;
-  font-size: 1.8rem;
-  font-weight: 600;
-  border-bottom: 1px solid var(--emphasis-color);
-  background-color: var(--main-color);
-  padding: 1.5rem 1rem;
-`;
+import Table from "../../ui/Table";
+import TableHeader from "../../ui/TableHeader";
 
 function RoomTable() {
   const [searchParams] = useSearchParams();
@@ -80,7 +55,7 @@ function RoomTable() {
   return (
     <Menus>
       <Table role="table">
-        <TableHeader role="row">
+        <TableHeader role="row" columns="0.6fr 2fr 1.2fr 0.8fr 0.8fr 0.6fr">
           <div></div>
           <div>Room</div>
           <div>Capacity</div>
