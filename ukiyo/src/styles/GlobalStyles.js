@@ -13,6 +13,8 @@ const GlobalStyles = createGlobalStyle`
         --lightest-bg-color: #c4d6c6;
         --dark-bg-color: #495e4d;
         --success-color: #259651;
+        --light-success-color: #8fc59b;
+        --dark-success-color: #005d1e;
         --danger-color: #c23036;
         --dark-danger-color: #a0001e;
         --disabled-color: #98afba;

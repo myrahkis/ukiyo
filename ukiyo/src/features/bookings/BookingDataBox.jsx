@@ -1,7 +1,10 @@
 /* eslint-disable react/prop-types */
 import { format, isToday } from "date-fns";
 import { formatDistanceFromNow } from "../../utils/helpers";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { PiBookOpenTextLight } from "react-icons/pi";
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import { IoPricetagsOutline } from "react-icons/io5";
 
 const StyledBookingDataBox = styled.div`
   overflow: hidden;
@@ -22,12 +25,19 @@ const Header = styled.div`
   color: var(--light-text-color);
 `;
 
-const Section = styled.section``;
+const Section = styled.section`
+  /* padding: 2rem; */
+`;
 
-const Guest = styled.div`
+const GuestWrapper = styled.div`
   display: flex;
   padding: 0 2.5rem;
+  padding-top: 1rem;
   gap: 1rem;
+`;
+
+const Guest = styled.p`
+  font-weight: 500;
 `;
 
 const GuestDetails = styled.div`
@@ -36,12 +46,70 @@ const GuestDetails = styled.div`
   color: var(--main-color);
 `;
 
-const Observations = styled.div``;
+const Observations = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 2.5rem;
+`;
+
+const Breakfast = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 2.5rem;
+  ${(props) =>
+    props.hastoppadding &&
+    css`
+      padding-top: 0;
+    `}
+`;
+
+const Label = styled.div`
+  font-weight: 500;
+`;
+
+const PriceWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 2.5rem;
+  margin: 0 2.5rem;
+  /* margin-bottom: 2rem; */
+  border-radius: 1rem;
+  background-color: var(--light-success-color);
+  color: var(--dark-success-color);
+`;
+
+const Price = styled.div`
+  display: inherit;
+  gap: 1.5rem;
+`;
+
+const Paid = styled.p`
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 1.3rem;
+`;
+
+const CreatedTime = styled.div`
+  display: flex;
+  justify-content: end;
+  padding: 2rem 2.5rem;
+  margin-top: 1rem;
+`;
+
+const P = styled.p`
+  color: var(--main-color);
+  font-size: 1.2rem;
+`;
 
 const Flag = styled.img``;
 
 function BookingDataBox({
   booking: {
+    created_at,
     startDate,
     endDate,
     numNights,
@@ -56,6 +124,8 @@ function BookingDataBox({
     guests: { fullName, email, nationality, countryFlag, nationalID },
   },
 }) {
+  const breakfastPrice = hasBreakfast ? extrasPrice * numNights : 0;
+  const totalPriceRight = roomPrice * numNights + breakfastPrice;
   return (
     <StyledBookingDataBox>
       <Header>
@@ -76,26 +146,50 @@ function BookingDataBox({
         </p>
       </Header>
       <Section>
-        <Guest>
+        <GuestWrapper>
           {countryFlag && (
-            <Flag src={countryFlag} alt={`Flag of ${nationality}`} />
+            <Flag src={`https://flagsapi.com/${countryFlag}/flat/16.png`} alt={`Flag of ${nationality}`} />
           )}
-          <p>
+          <Guest>
             {fullName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
-          </p>
+          </Guest>
           <GuestDetails>
             <span>&bull;</span>
             <p>{email}</p>
             <span>&bull;</span>
             <p>National ID {nationalID}</p>
           </GuestDetails>
-        </Guest>
+        </GuestWrapper>
 
-        {observations && 
-        <Observations>
-            <p>Observations {observations}</p>
-        </Observations>
-        }
+        {observations && (
+          <Observations>
+            <Label>
+              <PiBookOpenTextLight /> <span>Observations</span>
+            </Label>
+            <p> {observations}</p>
+          </Observations>
+        )}
+        <Breakfast hastoppadding={observations}>
+          <Label>
+            <IoIosCheckmarkCircleOutline /> <span>Breakfast included?</span>
+          </Label>
+          <p>{hasBreakfast === true ? "Yes" : "No"}</p>
+        </Breakfast>
+        <PriceWrapper>
+          <Price style={{ display: "flex" }}>
+            <Label>
+              <IoPricetagsOutline /> <span>Total price</span>
+            </Label>
+            <p>
+              ${totalPriceRight} (${roomPrice * numNights} room{" "}
+              {hasBreakfast && `+ ${extrasPrice * numNights} breakfast`})
+            </p>
+          </Price>
+          <Paid>{isPaid === true ? "Paid" : "Not paid"}</Paid>
+        </PriceWrapper>
+        <CreatedTime>
+          <P>Booked on {format(created_at, "MMM dd yyyy, H:mm")}</P>
+        </CreatedTime>
       </Section>
     </StyledBookingDataBox>
   );
