@@ -9,12 +9,13 @@ import AddRoom from "./AddRoom";
 import useRooms from "./useRooms";
 import Table from "../../ui/Table";
 import TableHeader from "../../ui/TableHeader";
+import Loader from "../../ui/Loader";
 
 function RoomTable() {
   const [searchParams] = useSearchParams();
   const { isLoading, rooms, count, error } = useRooms();
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   // filter
   const filterValue = searchParams.get("discount") || "all";

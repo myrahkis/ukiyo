@@ -7,11 +7,12 @@ import TableFooter from "../../ui/TableFooter";
 import useBooking from "./useBooking";
 import Table from "../../ui/Table";
 import TableHeader from "../../ui/TableHeader";
+import Loader from "../../ui/Loader";
 
 function BookingsTable() {
   const { isLoading, bookings, count, error } = useBooking();
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   if (bookings.length === 0) return <EmptyTable sub="bookings" />;
 

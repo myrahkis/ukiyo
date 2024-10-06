@@ -45,5 +45,19 @@ export async function getBooking(id) {
   return data;
 }
 
+export async function updateBooking(id, obj) {
+  const { data, error } = await supabase
+    .from("bookings")
+    .update(obj)
+    .eq("id", id)
+    .select();
+
+    console.log(id);
+
+  if (error) throw new Error(`Couldn't update booking ${id}!`);
+
+  return data;
+}
+
 // eg the last 30 days
 // export async function getBookingAfterDate(date) {}

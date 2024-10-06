@@ -4,6 +4,7 @@ import Tag from "../../ui/Tag";
 import BookingDataBox from "./BookingDataBox";
 import useBookingId from "./useBookingId";
 import styled from "styled-components";
+import Loader from "../../ui/Loader";
 
 const Header = styled.div`
   display: flex;
@@ -63,7 +64,7 @@ function BookingDetail() {
   const { booking, isLoading } = useBookingId();
   const navigate = useNavigate();
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   const { id, status } = booking;
 

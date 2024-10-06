@@ -2,6 +2,10 @@ import { useNavigate } from "react-router-dom";
 import BookingDataBox from "../bookings/BookingDataBox";
 import useBookingId from "../bookings/useBookingId";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+import Checkbox from "../../ui/Checkbox";
+import Loader from "../../ui/Loader";
+import { useCheckin } from "./useCheckin";
 
 const Header = styled.div`
   display: flex;
@@ -58,28 +62,56 @@ const BackLowBtn = styled.button`
 `;
 
 function CheckInBooking() {
+  const [confirmPayment, setConfirmPayment] = useState(false);
   const { booking, isLoading } = useBookingId();
   const navigate = useNavigate();
+  const { checkin, isCheckingIn } = useCheckin();
 
-  if (isLoading) return <h2>Loading...</h2>;
+  useEffect(
+    function () {
+      setConfirmPayment(booking?.isPaid ?? false);
+    },
+    [booking]
+  );
+
+  const isWorking = isLoading || isCheckingIn;
+
+  if (isWorking) return <Loader />;
 
   const { id, guests, totalPrice, numGuests, hasBreakfast, numNights } =
     booking;
 
-  function checkInHandle() {}
+  function checkInHandle() {
+    if (!confirmPayment) return;
+    checkin(id);
+  }
+
   return (
     <>
       <Header>
         <HeaderInfo>
-          <h1>Booking #{booking.id}</h1>
+          <h1>Checking in booking #{booking.id}</h1>
         </HeaderInfo>
         <BackBtn onClick={() => navigate(-1)}>Back</BackBtn>
       </Header>
       <BookingDataBox booking={booking} />
+      <div>
+        <Checkbox
+          checked={confirmPayment}
+          onChange={() => setConfirmPayment((confirm) => !confirm)}
+          id="confirm"
+          disabled={confirmPayment}
+        >
+          I confirm that {guests.fullName} has paid for the booking.
+        </Checkbox>
+      </div>
       <BtnsWrapper>
-        {booking.status === "unconfirmed" && (
-          <CheckInBtn onClick={checkInHandle}>Check in</CheckInBtn>
-        )}
+        <CheckInBtn
+          onClick={checkInHandle}
+          disabled={!confirmPayment || isCheckingIn}
+        >
+          Check in booking #{id}
+        </CheckInBtn>
         <BackLowBtn onClick={() => navigate(-1)}>Back</BackLowBtn>
       </BtnsWrapper>
     </>
