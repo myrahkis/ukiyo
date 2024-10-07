@@ -11,6 +11,8 @@ import { HiOutlineArrowUpOnSquare } from "react-icons/hi2";
 import MenuBtn from "../../ui/MenuBtn";
 import { useNavigate } from "react-router-dom";
 import Tag from "../../ui/Tag";
+import { useCheckout } from "../check-in-out/useCheckout";
+import Loader from "../../ui/Loader";
 
 const Room = styled.p``;
 
@@ -36,6 +38,7 @@ function BookingRow({
     guests: { fullName, email },
   },
 }) {
+  const { checkout, isCheckingOut } = useCheckout();
   const navigate = useNavigate();
 
   const statusColor = {
@@ -43,6 +46,8 @@ function BookingRow({
     "checked-in": "success",
     "checked-out": "dark",
   };
+
+  if (isCheckingOut) return <Loader />;
 
   return (
     <TableRow role="row" columns="2fr 1fr 1.5fr 0.9fr 0.4fr 0.2fr">
@@ -85,7 +90,7 @@ function BookingRow({
           )}
           {status === "checked-in" && (
             <Menus.Button>
-              <MenuBtn onClick={() => navigate(`/check-out/${id}`)}>
+              <MenuBtn onClick={() => checkout(id)} disabled={isCheckingOut}>
                 <HiOutlineArrowUpOnSquare /> Check out
               </MenuBtn>
             </Menus.Button>

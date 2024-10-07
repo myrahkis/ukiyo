@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import Row from "../../ui/Row";
 import Tag from "../../ui/Tag";
 import BookingDataBox from "./BookingDataBox";
 import useBookingId from "./useBookingId";
 import styled from "styled-components";
 import Loader from "../../ui/Loader";
+import { useCheckout } from "../check-in-out/useCheckout";
 
 const Header = styled.div`
   display: flex;
@@ -34,7 +34,7 @@ const BtnsWrapper = styled.div`
   gap: 1rem;
 `;
 
-const CheckInBtn = styled.button`
+const CheckInOutBtn = styled.button`
   padding: 1rem 1.5rem;
   border: none;
   border-radius: 1rem;
@@ -62,9 +62,10 @@ const BackLowBtn = styled.button`
 
 function BookingDetail() {
   const { booking, isLoading } = useBookingId();
+  const { checkout, isCheckingOut } = useCheckout();
   const navigate = useNavigate();
 
-  if (isLoading) return <Loader />;
+  if (isLoading || isCheckingOut) return <Loader />;
 
   const { id, status } = booking;
 
@@ -86,9 +87,14 @@ function BookingDetail() {
       <BookingDataBox booking={booking} />
       <BtnsWrapper>
         {booking.status === "unconfirmed" && (
-          <CheckInBtn onClick={() => navigate(`/check-in/${id}`)}>
+          <CheckInOutBtn onClick={() => navigate(`/check-in/${id}`)}>
             Check in
-          </CheckInBtn>
+          </CheckInOutBtn>
+        )}
+        {status === "checked-in" && (
+          <CheckInOutBtn onClick={() => checkout(id)} disabled={isCheckingOut}>
+            Check out
+          </CheckInOutBtn>
         )}
         <BackLowBtn onClick={() => navigate(-1)}>Back</BackLowBtn>
       </BtnsWrapper>
