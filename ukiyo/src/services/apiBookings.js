@@ -52,8 +52,6 @@ export async function updateBooking(id, obj) {
     .eq("id", id)
     .select();
 
-    console.log(id);
-
   if (error) throw new Error(`Couldn't update booking ${id}!`);
 
   return data;

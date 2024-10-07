@@ -78,8 +78,14 @@ const PriceWrapper = styled.div`
   margin: 0 2.5rem;
   /* margin-bottom: 2rem; */
   border-radius: 1rem;
-  background-color: var(--light-success-color);
-  color: var(--dark-success-color);
+  background-color: ${(props) =>
+    props.isPaid
+      ? css`var(--light-success-color)`
+      : css`var(--light-warning-color)`};
+  color: ${(props) =>
+    props.isPaid
+      ? css`var(--dark-success-color)`
+      : css`var(--dark-warning-color)`};
 `;
 
 const Price = styled.div`
@@ -124,8 +130,7 @@ function BookingDataBox({
     guests: { fullName, email, nationality, countryFlag, nationalID },
   },
 }) {
-  const breakfastPrice = hasBreakfast ? extrasPrice * numNights : 0;
-  const totalPriceRight = roomPrice * numNights + breakfastPrice;
+  const breakfastPrice = hasBreakfast ? extrasPrice * numNights * numGuests : 0;
   return (
     <StyledBookingDataBox>
       <Header>
@@ -148,7 +153,10 @@ function BookingDataBox({
       <Section>
         <GuestWrapper>
           {countryFlag && (
-            <Flag src={`https://flagsapi.com/${countryFlag}/flat/16.png`} alt={`Flag of ${nationality}`} />
+            <Flag
+              src={`https://flagsapi.com/${countryFlag}/flat/16.png`}
+              alt={`Flag of ${nationality}`}
+            />
           )}
           <Guest>
             {fullName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
@@ -175,14 +183,16 @@ function BookingDataBox({
           </Label>
           <p>{hasBreakfast === true ? "Yes" : "No"}</p>
         </Breakfast>
-        <PriceWrapper>
+        <PriceWrapper isPaid={isPaid}>
           <Price style={{ display: "flex" }}>
             <Label>
               <IoPricetagsOutline /> <span>Total price</span>
             </Label>
             <p>
-              ${totalPriceRight} (${roomPrice * numNights} room{" "}
-              {hasBreakfast && `+ ${extrasPrice * numNights} breakfast`})
+              ${totalPrice}{" "}
+              {hasBreakfast &&
+                `(${roomPrice * numNights} room
+              + ${extrasPrice} breakfast)`}
             </p>
           </Price>
           <Paid>{isPaid === true ? "Paid" : "Not paid"}</Paid>

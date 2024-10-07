@@ -17,7 +17,9 @@ const GlobalStyles = createGlobalStyle`
         --dark-success-color: #005d1e;
         --danger-color: #c23036;
         --dark-danger-color: #a0001e;
-        --disabled-color: #98afba;
+        --disabled-color: #748a94;
+        --light-warning-color: #ffdf82;
+        --dark-warning-color: #805d00;
     }
 
     * {
@@ -44,7 +46,6 @@ const GlobalStyles = createGlobalStyle`
         &:disabled {
             cursor: not-allowed;
             background-color: var(--disabled-color);
-            border: 2px dashed var(--emphasis-color);
 
             &:hover {
                 background-color: var(--disabled-color);

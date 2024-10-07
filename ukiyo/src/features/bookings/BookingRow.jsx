@@ -7,6 +7,7 @@ import Menus from "../../ui/Menus";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaBuildingCircleCheck } from "react-icons/fa6";
 import { CgDetailsMore } from "react-icons/cg";
+import { HiOutlineArrowUpOnSquare } from "react-icons/hi2";
 import MenuBtn from "../../ui/MenuBtn";
 import { useNavigate } from "react-router-dom";
 import Tag from "../../ui/Tag";
@@ -75,11 +76,20 @@ function BookingRow({
               <CgDetailsMore /> See details
             </MenuBtn>
           </Menus.Button>
-          {status === 'unconfirmed' && <Menus.Button>
-            <MenuBtn onClick={() => navigate(`/bookings/${id}`)}>
-              <FaBuildingCircleCheck /> Check in
-            </MenuBtn>
-          </Menus.Button>}
+          {status === "unconfirmed" && (
+            <Menus.Button>
+              <MenuBtn onClick={() => navigate(`/check-in/${id}`)}>
+                <FaBuildingCircleCheck /> Check in
+              </MenuBtn>
+            </Menus.Button>
+          )}
+          {status === "checked-in" && (
+            <Menus.Button>
+              <MenuBtn onClick={() => navigate(`/check-out/${id}`)}>
+                <HiOutlineArrowUpOnSquare /> Check out
+              </MenuBtn>
+            </Menus.Button>
+          )}
         </Menus.List>
       </Menus.Menu>
     </TableRow>
