@@ -5,6 +5,11 @@ import useBookingId from "./useBookingId";
 import styled from "styled-components";
 import Loader from "../../ui/Loader";
 import { useCheckout } from "../check-in-out/useCheckout";
+import Modal from "../../ui/Modal";
+import DeleteBtn from "../../ui/DeleteBtn";
+import { MdDelete } from "react-icons/md";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import useDeleteBooking from "./useDeleteBooking";
 
 const Header = styled.div`
   display: flex;
@@ -47,6 +52,19 @@ const CheckInOutBtn = styled.button`
   }
 `;
 
+const Delete = styled.button`
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: var(--danger-color);
+  color: var(--light-text-color);
+
+  &:hover {
+    background-color: var(--dark-danger-color);
+    transition: background-color 0.3s;
+  }
+`;
+
 const BackLowBtn = styled.button`
   padding: 1rem 1.5rem;
   border: none;
@@ -63,9 +81,10 @@ const BackLowBtn = styled.button`
 function BookingDetail() {
   const { booking, isLoading } = useBookingId();
   const { checkout, isCheckingOut } = useCheckout();
+  const { deleteBookingMut, isDeleting } = useDeleteBooking();
   const navigate = useNavigate();
 
-  if (isLoading || isCheckingOut) return <Loader />;
+  if (isLoading || isCheckingOut || isDeleting) return <Loader />;
 
   const { id, status } = booking;
 
@@ -74,6 +93,12 @@ function BookingDetail() {
     "checked-in": "success",
     "checked-out": "dark",
   };
+
+  function deleteHandle() {
+    deleteBookingMut(id);
+  }
+
+  const btnIconStyle = { color: "var(--light-text-color)", marginRight: "5px" };
 
   return (
     <>
@@ -86,6 +111,21 @@ function BookingDetail() {
       </Header>
       <BookingDataBox booking={booking} />
       <BtnsWrapper>
+        <Modal>
+          <Modal.Open opens="delete-confirm">
+            <Delete onClick={deleteHandle} disabled={isDeleting}>
+              <MdDelete style={btnIconStyle} />
+              Delete
+            </Delete>
+          </Modal.Open>
+          <Modal.Window name="delete-confirm">
+            <ConfirmDelete
+              subject={id}
+              onConfirm={deleteHandle}
+              disabled={isDeleting}
+            />
+          </Modal.Window>
+        </Modal>
         {booking.status === "unconfirmed" && (
           <CheckInOutBtn onClick={() => navigate(`/check-in/${id}`)}>
             Check in

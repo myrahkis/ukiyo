@@ -11,6 +11,7 @@ import { FaCopy, FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import TableRow from "../../ui/TableRow";
 import MenuBtn from "../../ui/MenuBtn";
+import DeleteBtn from "../../ui/DeleteBtn";
 
 const Img = styled.img`
   display: block;
@@ -25,24 +26,6 @@ const Price = styled.div`
 const Discount = styled.div`
   color: var(--success-color);
   font-weight: 700;
-`;
-
-const DeleteBtn = styled.button`
-  width: 100%;
-  height: 100%;
-  padding: 1rem 1.5rem;
-  border: none;
-  background-color: transparent;
-  font-weight: 600;
-  text-align: start;
-  color: var(--light-text-color);
-
-  border: none;
-
-  &:hover {
-    background-color: var(--dark-danger-color);
-    transition: background-color 0.2s;
-  }
 `;
 
 const iconStyle = { fontSize: "2rem" };

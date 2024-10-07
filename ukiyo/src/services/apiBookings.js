@@ -57,5 +57,13 @@ export async function updateBooking(id, obj) {
   return data;
 }
 
+export async function deleteBooking(id) {
+  const { error } = await supabase.from("bookings").delete().eq("id", id);
+
+  if (error) throw new Error(`Couldn't delete booking ${id}!`);
+
+  return null;
+}
+
 // eg the last 30 days
 // export async function getBookingAfterDate(date) {}

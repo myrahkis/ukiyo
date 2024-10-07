@@ -13,6 +13,11 @@ import { useNavigate } from "react-router-dom";
 import Tag from "../../ui/Tag";
 import { useCheckout } from "../check-in-out/useCheckout";
 import Loader from "../../ui/Loader";
+import useDeleteBooking from "./useDeleteBooking";
+import { MdDelete } from "react-icons/md";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import DeleteBtn from "../../ui/DeleteBtn";
 
 const Room = styled.p``;
 
@@ -39,6 +44,7 @@ function BookingRow({
   },
 }) {
   const { checkout, isCheckingOut } = useCheckout();
+  const { deleteBookingMut, isDeleting } = useDeleteBooking();
   const navigate = useNavigate();
 
   const statusColor = {
@@ -47,7 +53,13 @@ function BookingRow({
     "checked-out": "dark",
   };
 
-  if (isCheckingOut) return <Loader />;
+  if (isCheckingOut || isDeleting) return <Loader />;
+
+  function deleteHandle() {
+    deleteBookingMut(id);
+  }
+
+  const btnIconStyle = { color: "var(--light-text-color)", marginRight: "5px" };
 
   return (
     <TableRow role="row" columns="2fr 1fr 1.5fr 0.9fr 0.4fr 0.2fr">
@@ -95,6 +107,23 @@ function BookingRow({
               </MenuBtn>
             </Menus.Button>
           )}
+          <Menus.Button>
+            <Modal>
+              <Modal.Open opens="delete-confirm">
+                <DeleteBtn onClick={deleteHandle} disabled={isDeleting}>
+                  <MdDelete style={btnIconStyle} />
+                  Delete
+                </DeleteBtn>
+              </Modal.Open>
+              <Modal.Window name="delete-confirm">
+                <ConfirmDelete
+                  subject={name}
+                  onConfirm={deleteHandle}
+                  disabled={isDeleting}
+                />
+              </Modal.Window>
+            </Modal>
+          </Menus.Button>
         </Menus.List>
       </Menus.Menu>
     </TableRow>
