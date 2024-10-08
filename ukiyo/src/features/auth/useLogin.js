@@ -11,7 +11,7 @@ function useLogin() {
     mutationFn: ({ email, password }) => login({ email, password }),
     onSuccess: (user) => {
       queryClient.setQueriesData(["user"], user); // placing user to cache
-      navigate("/");
+      navigate("/", { replace: true });
     },
     onError: () => {
       toast.error("Email or password is invalid.");
