@@ -70,14 +70,13 @@ function Window({ children, name }) {
 
   if (name !== openName) return null;
 
-  return createPortal(
+  return (
     <Blur>
       <StyledModal ref={ref}>
         <Close onClick={close}>X</Close>
         <div>{cloneElement(children, { onClose: close })}</div>
       </StyledModal>
-    </Blur>,
-    document.body
+    </Blur>
   );
 }
 

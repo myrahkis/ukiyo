@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import RoomRow from "./RoomRow";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";

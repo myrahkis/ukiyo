@@ -6,7 +6,6 @@ import styled from "styled-components";
 import Loader from "../../ui/Loader";
 import { useCheckout } from "../check-in-out/useCheckout";
 import Modal from "../../ui/Modal";
-import DeleteBtn from "../../ui/DeleteBtn";
 import { MdDelete } from "react-icons/md";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import useDeleteBooking from "./useDeleteBooking";
