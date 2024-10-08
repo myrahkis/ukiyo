@@ -54,10 +54,18 @@ function LoginForm() {
 
     if (!email || !password) return;
 
-    loginMut({ email, password });
+    loginMut(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail("");
+          setPassword("");
+        },
+      }
+    );
   }
 
-  if (isLoggingIn) return <Loader />;
+  //   if (isLoggingIn) return <Loader />;
 
   return (
     <Form onSubmit={submitHandle}>
@@ -69,6 +77,7 @@ function LoginForm() {
           autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={isLoggingIn}
         />
       </Wrapper>
       <Wrapper>
@@ -79,9 +88,12 @@ function LoginForm() {
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={isLoggingIn}
         />
       </Wrapper>
-      <LoginBtn type="submit">Login</LoginBtn>
+      <LoginBtn type="submit" disabled={isLoggingIn}>
+        Login
+      </LoginBtn>
     </Form>
   );
 }
