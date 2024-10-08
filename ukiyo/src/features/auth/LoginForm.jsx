@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
+import useLogin from "./useLogin";
+import Loader from "../../ui/Loader";
 
 const Form = styled.form`
   display: flex;
@@ -22,6 +24,10 @@ const Input = styled.input`
   border: none;
   border-radius: 1.5rem;
   padding: 1rem;
+
+  &:focus {
+    outline: 2px dashed var(--emphasis-color);
+  }
 `;
 
 const LoginBtn = styled.button`
@@ -41,8 +47,17 @@ const LoginBtn = styled.button`
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { loginMut, isLoggingIn } = useLogin();
 
-  function submitHandle() {}
+  function submitHandle(e) {
+    e.preventDefault();
+
+    if (!email || !password) return;
+
+    loginMut({ email, password });
+  }
+
+  if (isLoggingIn) return <Loader />;
 
   return (
     <Form onSubmit={submitHandle}>
@@ -61,6 +76,7 @@ function LoginForm() {
         <Input
           type="password"
           id="password"
+          autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
