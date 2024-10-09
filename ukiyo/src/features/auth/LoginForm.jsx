@@ -1,32 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
 import useLogin from "./useLogin";
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  width: 30%;
-  padding: 3rem 3.5rem;
-  border-radius: 1rem;
-  background-color: var(--lightest-bg-color);
-  color: var(--dark-text-color);
-`;
+import Form from "../../ui/Form";
+import Input from "../../ui/Input";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-`;
-
-const Input = styled.input`
-  border: none;
-  border-radius: 1.5rem;
-  padding: 1rem;
-
-  &:focus {
-    outline: 2px dashed var(--emphasis-color);
-  }
 `;
 
 const LoginBtn = styled.button`
@@ -42,6 +23,10 @@ const LoginBtn = styled.button`
     transition: background-color 0.3s;
   }
 `;
+
+const Label = styled.label`
+  font-size: 1.8rem;
+`
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -65,9 +50,9 @@ function LoginForm() {
   }
 
   return (
-    <Form onSubmit={submitHandle}>
+    <Form onSubmit={submitHandle} width="28" padding="">
       <Wrapper>
-        <label htmlFor="email">Email address</label>
+        <Label htmlFor="email">Email address</Label>
         <Input
           type="email"
           id="email"
@@ -78,7 +63,7 @@ function LoginForm() {
         />
       </Wrapper>
       <Wrapper>
-        <label htmlFor="password">Password</label>
+        <Label htmlFor="password">Password</Label>
         <Input
           type="password"
           id="password"

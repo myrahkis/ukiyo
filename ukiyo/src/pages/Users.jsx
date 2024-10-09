@@ -1,8 +1,22 @@
+import styled from "styled-components";
+import SignUpForm from "../features/auth/SignUpForm";
+import Heading from "../ui/Heading";
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 function Users() {
   return (
-    <div>
-      <h1>Users</h1>
-    </div>
+    <>
+      <Heading>
+        <h1>Create new user</h1>
+      </Heading>
+      <Wrapper>
+        <SignUpForm />
+      </Wrapper>
+    </>
   );
 }
 

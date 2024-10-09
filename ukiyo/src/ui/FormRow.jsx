@@ -4,6 +4,7 @@ import styled from "styled-components";
 const StyledFormRow = styled.div`
   display: flex;
   gap: 1rem;
+  align-items: center;
 `;
 
 const Label = styled.label`
