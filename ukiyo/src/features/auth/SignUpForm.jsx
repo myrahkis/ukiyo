@@ -4,6 +4,8 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import Button from "../../ui/Button";
 import { useForm } from "react-hook-form";
+import useSignUp from "./useSignUp";
+import Loader from "../../ui/Loader";
 
 const BtnsWrapper = styled.div`
   display: flex;
@@ -13,16 +15,20 @@ const BtnsWrapper = styled.div`
 `;
 
 function SignUpForm() {
+  const { signUpMut, isPending } = useSignUp();
   const {
     register,
     formState: { errors },
     getValues,
     handleSubmit,
+    reset,
   } = useForm();
 
-  function onSubmit(data) {
-    console.log(data);
+  function onSubmit({ fullName, email, password }) {
+    signUpMut({ fullName, email, password }, { onSettled: reset });
   }
+
+  if (isPending) return <Loader />;
 
   return (
     <Form

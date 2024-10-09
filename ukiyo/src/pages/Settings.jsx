@@ -1,11 +1,16 @@
 import UpdateSettingsForm from "../features/settings/UpdateSettingsForm";
+import Heading from "../ui/Heading";
 
 function Settings() {
   return (
-    <div>
-      <h1>Update hotel settings</h1>
-      <UpdateSettingsForm />
-    </div>
+    <>
+      <Heading>
+        <h1>Update hotel settings</h1>
+      </Heading>
+      <div>
+        <UpdateSettingsForm />
+      </div>
+    </>
   );
 }
 

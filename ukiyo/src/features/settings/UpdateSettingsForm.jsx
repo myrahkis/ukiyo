@@ -1,3 +1,5 @@
+import Form from "../../ui/Form";
+import Input from "../../ui/Input";
 import { useSettings } from "./useSettings";
 import { useUpdateSettings } from "./useUpdateSettings";
 
@@ -23,10 +25,10 @@ function UpdateSettingsForm() {
   }
 
   return (
-    <form>
+    <Form>
       <div>
         <label>Minimum nights per booking</label>
-        <input
+        <Input
           type="number"
           id="minBookingLength"
           defaultValue={minBookingLength}
@@ -36,7 +38,7 @@ function UpdateSettingsForm() {
       </div>
       <div>
         <label>Maximum nights per booking</label>
-        <input
+        <Input
           type="number"
           id="maxBookingLength"
           defaultValue={maxBookingLength}
@@ -46,7 +48,7 @@ function UpdateSettingsForm() {
       </div>
       <div>
         <label>Max guests per booking</label>
-        <input
+        <Input
           type="number"
           id="maxGuestsPerBooking"
           defaultValue={maxGuestsPerBooking}
@@ -56,7 +58,7 @@ function UpdateSettingsForm() {
       </div>
       <div>
         <label>Breakfast price</label>
-        <input
+        <Input
           type="number"
           id="breakfastPrice"
           defaultValue={breakfastPrice}
@@ -64,7 +66,7 @@ function UpdateSettingsForm() {
           disabled={isWorking}
         />
       </div>
-    </form>
+    </Form>
   );
 }
 
