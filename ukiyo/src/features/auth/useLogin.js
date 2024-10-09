@@ -10,7 +10,7 @@ function useLogin() {
   const { mutate: loginMut, isPending: isLoggingIn } = useMutation({
     mutationFn: ({ email, password }) => login({ email, password }),
     onSuccess: (user) => {
-      queryClient.setQueriesData(["user"], user); // placing user to cache
+      queryClient.setQueryData(["user"], user.user); // placing user to cache
       navigate("/", { replace: true });
     },
     onError: () => {

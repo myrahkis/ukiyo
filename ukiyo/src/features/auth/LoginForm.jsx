@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import useLogin from "./useLogin";
-import Loader from "../../ui/Loader";
 
 const Form = styled.form`
   display: flex;
@@ -64,8 +63,6 @@ function LoginForm() {
       }
     );
   }
-
-  //   if (isLoggingIn) return <Loader />;
 
   return (
     <Form onSubmit={submitHandle}>
