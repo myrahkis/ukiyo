@@ -15,7 +15,6 @@ const BtnsWrapper = styled.div`
 `;
 
 function SignUpForm() {
-  const { signUpMut, isPending } = useSignUp();
   const {
     register,
     formState: { errors },
@@ -23,6 +22,7 @@ function SignUpForm() {
     handleSubmit,
     reset,
   } = useForm();
+  const { signUpMut, isPending } = useSignUp();
 
   function onSubmit({ fullName, email, password }) {
     signUpMut({ fullName, email, password }, { onSettled: reset });
