@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const Button = styled.button`
   width: fit-content;
@@ -13,6 +13,17 @@ const Button = styled.button`
     background-color: var(--dark-emphasis-color);
     transition: background-color 0.35s;
   }
+
+  ${(props) =>
+    props.styleAs === "clear" &&
+    css`
+      background-color: var(--light-bg-color);
+      box-shadow: 0px 0px 2px var(--dark-text-color);
+
+      &:hover {
+        background-color: var(--main-color);
+      }
+    `}
 `;
 
 export default Button;

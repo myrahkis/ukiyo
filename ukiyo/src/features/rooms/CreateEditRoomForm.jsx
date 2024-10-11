@@ -5,6 +5,8 @@ import FormRow from "../../ui/FormRow";
 import { useCreateRoom } from "./useCreateRoom";
 import { useEditRoom } from "./useEditRoom";
 import Button from "../../ui/Button";
+import File from "../../ui/File";
+import BtnsContainer from "../../ui/BtnsContainer";
 
 const Form = styled.form`
   display: flex;
@@ -40,28 +42,6 @@ const TextArea = styled.textarea`
   &:focus {
     outline: 0.2rem dashed var(--emphasis-color);
   }
-`;
-
-const File = styled.input`
-  &::file-selector-button {
-    cursor: pointer;
-    padding: 1rem 2rem;
-    background-color: var(--dark-bg-color);
-    color: var(--light-text-color);
-    border: none;
-    border-radius: 2rem;
-
-    &:hover {
-      background-color: var(--main-color);
-      transition: background-color 0.3s;
-    }
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
 `;
 
 function CreateEditRoomForm({ roomToEdit = {}, onClose }) {
@@ -187,14 +167,14 @@ function CreateEditRoomForm({ roomToEdit = {}, onClose }) {
         />
         {/* {errors.name && <Error>{errors.name.message}</Error>} */}
       </FormRow>
-      <ButtonContainer>
+      <BtnsContainer>
         <Button type="reset" disabled={isWorking}>
           Clear
         </Button>
         <Button type="submit" disabled={isWorking}>
           {isEditSession ? "Edit" : "Add"}
         </Button>
-      </ButtonContainer>
+      </BtnsContainer>
     </Form>
   );
 }

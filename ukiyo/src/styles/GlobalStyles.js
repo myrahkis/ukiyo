@@ -53,6 +53,12 @@ const GlobalStyles = createGlobalStyle`
         }
     }
 
+    input {
+        &:disabled {
+            cursor: not-allowed;
+        }
+    }
+
     /* https://codepen.io/t_afif/pen/VwpWZBr */
     .loader {
         width: 35px;
