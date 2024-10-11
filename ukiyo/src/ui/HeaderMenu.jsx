@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { useState } from "react";
+import { useDarkMode } from "../context/DarkModeContext";
 
 const StyledHeaderMenu = styled.ul`
   display: flex;
@@ -30,12 +31,12 @@ const iconStyle = { fontSize: "2rem" };
 
 function HeaderMenu() {
   const navigate = useNavigate();
-  const [isDark, setIsDark] = useState(false);
+  const { isDark, toggleDarkMode } = useDarkMode();
 
   return (
     <StyledHeaderMenu>
       <li>
-        <Btn onClick={() => setIsDark((dark) => !dark)}>
+        <Btn onClick={toggleDarkMode}>
           {isDark ? (
             <MdDarkMode style={iconStyle} />
           ) : (

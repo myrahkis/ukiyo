@@ -18,6 +18,7 @@ import { MdDelete } from "react-icons/md";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import DeleteBtn from "../../ui/DeleteBtn";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 const Room = styled.p``;
 
@@ -27,8 +28,6 @@ const Wrapper = styled.div`
 `;
 
 const Price = styled.div``;
-
-const iconStyle = { fontSize: "2rem" };
 
 function BookingRow({
   booking: {
@@ -46,6 +45,7 @@ function BookingRow({
   const { checkout, isCheckingOut } = useCheckout();
   const { deleteBookingMut, isDeleting } = useDeleteBooking();
   const navigate = useNavigate();
+  const { isDark } = useDarkMode();
 
   const statusColor = {
     unconfirmed: "light",
@@ -85,7 +85,10 @@ function BookingRow({
       <Menus.Menu>
         <Menus.Toggle
           id={id}
-          icon={<BsThreeDotsVertical style={iconStyle} />}
+          icon={<BsThreeDotsVertical style={{
+            fontSize: "2rem",
+            color: isDark && "var(--light-text-color)",
+          }} />}
         />
         <Menus.List id={id}>
           <Menus.Button>

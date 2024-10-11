@@ -5,6 +5,7 @@ import { RiSettings4Fill } from "react-icons/ri";
 import { TbBookmarksFilled, TbUserFilled } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { useDarkMode } from "../context/DarkModeContext";
 
 const NavList = styled.ul`
   display: flex;
@@ -36,39 +37,74 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-const iconsStyles = { color: "var(--light-bg-color)", size: '10px' };
-
 function MainNav() {
+  const { isDark } = useDarkMode();
+
   return (
     <nav>
       <NavList>
         <li>
           <StyledNavLink to="/dashboard">
-            <HiHome style={iconsStyles} />
+            <HiHome
+              style={{
+                color: `${
+                  !isDark ? "var(--light-bg-color)" : "var(--light-text-color)"
+                }`,
+                size: "10px",
+              }}
+            />
             <span>Home</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/bookings">
-            <TbBookmarksFilled style={iconsStyles} />
+            <TbBookmarksFilled
+              style={{
+                color: `${
+                  !isDark ? "var(--light-bg-color)" : "var(--light-text-color)"
+                }`,
+                size: "10px",
+              }}
+            />
             <span>Bookings</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/rooms">
-            <HiMiniHomeModern style={iconsStyles} />
+            <HiMiniHomeModern
+              style={{
+                color: `${
+                  !isDark ? "var(--light-bg-color)" : "var(--light-text-color)"
+                }`,
+                size: "10px",
+              }}
+            />
             <span>Rooms</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/users">
-            <HiMiniUsers style={iconsStyles} />
+            <HiMiniUsers
+              style={{
+                color: `${
+                  !isDark ? "var(--light-bg-color)" : "var(--light-text-color)"
+                }`,
+                size: "10px",
+              }}
+            />
             <span>Users</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/settings">
-            <RiSettings4Fill style={iconsStyles} />
+            <RiSettings4Fill
+              style={{
+                color: `${
+                  !isDark ? "var(--light-bg-color)" : "var(--light-text-color)"
+                }`,
+                size: "10px",
+              }}
+            />
             <span>Settings</span>
           </StyledNavLink>
         </li>

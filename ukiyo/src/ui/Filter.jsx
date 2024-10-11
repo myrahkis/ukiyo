@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { useDarkMode } from "../context/DarkModeContext";
 
 const StyledFilter = styled.div`
   display: flex;
@@ -17,6 +18,7 @@ const FilterBtn = styled.button`
   background-color: transparent;
   padding: 0.7rem;
   border-radius: 1rem;
+  color: ${(props) => props.isDark && "var(--light-text-color)"};
 
   ${(props) =>
     props.active &&
@@ -40,12 +42,13 @@ const FilterBtn = styled.button`
 function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentFilter = searchParams.get(filterField) || options.at(0).value;
+  const { isDark } = useDarkMode();
 
   function clickHandle(value) {
     searchParams.set(filterField, value);
 
     if (searchParams.get("page")) searchParams.set("page", 1);
-    
+
     setSearchParams(searchParams);
   }
 
@@ -56,6 +59,7 @@ function Filter({ filterField, options }) {
           key={opt.value}
           onClick={() => clickHandle(opt.value)}
           active={opt.value === currentFilter}
+          isDark={isDark}
         >
           {opt.label}
         </FilterBtn>

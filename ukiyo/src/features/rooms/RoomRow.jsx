@@ -12,6 +12,7 @@ import { MdDelete } from "react-icons/md";
 import TableRow from "../../ui/TableRow";
 import MenuBtn from "../../ui/MenuBtn";
 import DeleteBtn from "../../ui/DeleteBtn";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 const Img = styled.img`
   display: block;
@@ -28,7 +29,6 @@ const Discount = styled.div`
   font-weight: 700;
 `;
 
-const iconStyle = { fontSize: "2rem" };
 const btnIconStyle = { color: "var(--light-text-color)", marginRight: "5px" };
 
 function RoomRow({ room }) {
@@ -37,6 +37,7 @@ function RoomRow({ room }) {
   const { isDeleting, deleteRoomMut } = useDeleteRoom();
   const { isCreating, createRoom } = useCreateRoom();
   const isWorking = isDeleting || isCreating;
+  const { isDark } = useDarkMode();
 
   function deleteHandle() {
     deleteRoomMut(id);
@@ -63,7 +64,14 @@ function RoomRow({ room }) {
       <Menus.Menu>
         <Menus.Toggle
           id={id}
-          icon={<BsThreeDotsVertical style={iconStyle} />}
+          icon={
+            <BsThreeDotsVertical
+              style={{
+                fontSize: "2rem",
+                color: isDark && "var(--light-text-color)",
+              }}
+            />
+          }
         />
         <Menus.List id={id}>
           <Menus.Button>
