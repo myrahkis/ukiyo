@@ -5,7 +5,7 @@ import Heading from "../ui/Heading";
 
 const Container = styled.div`
   display: flex;
-  gap: 3rem;
+  gap: 5rem;
 `
 
 const Wrapper = styled.div`

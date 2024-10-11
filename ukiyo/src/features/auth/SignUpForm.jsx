@@ -92,7 +92,9 @@ function SignUpForm() {
         />
       </FormRow>
       <BtnsWrapper>
-        <Button type="reset" styleAs='clear'>Clear</Button>
+        <Button type="reset" styleAs="clear" onClick={reset}>
+          Clear
+        </Button>
         <Button>Create new user</Button>
       </BtnsWrapper>
     </Form>
