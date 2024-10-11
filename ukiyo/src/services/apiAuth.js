@@ -47,3 +47,37 @@ export async function signUp({ fullName, email, password }) {
 
   return data;
 }
+
+export async function updateUser({ password, fullName, ava }) {
+  // upd  password or name
+  let updData;
+
+  if (password) updData = { password };
+  if (fullName) updData = { data: { fullName, avatar: ava } };
+
+  const { data, error } = await supabase.auth.updateUser(updData);
+
+  if (error) throw new Error("Couldn't update the user.");
+
+  if (!ava) return data;
+
+  // upload ava
+  const fileName = `avatar-${data.user.id}-${Math.random()}`;
+
+  const { error: storageErr } = await supabase.storage
+    .from("avatars")
+    .upload(fileName, ava);
+
+  if (storageErr) throw new Error("There was an error while uploading avatar.");
+
+  // upd ava in use
+  const { data: updUser, error: error2 } = supabase.auth.updateUser({
+    data: {
+      avatar: `https://pnornbaiwgyhxggydeci.supabase.co/storage/v1/object/public/avatars/${fileName}`,
+    },
+  });
+
+  if (error2) throw new Error("Couldn't update the user with new avatar.");
+
+  return updUser;
+}

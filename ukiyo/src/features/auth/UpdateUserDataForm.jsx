@@ -6,6 +6,8 @@ import Input from "../../ui/Input";
 import File from "../../ui/File";
 import BtnsContainer from "../../ui/BtnsContainer";
 import Button from "../../ui/Button";
+import useUpdUser from "./useUpdUser";
+import Loader from "../../ui/Loader";
 
 function UpdateUserDataForm() {
   const {
@@ -16,30 +18,59 @@ function UpdateUserDataForm() {
   } = useUser();
   const [fullName, setFullName] = useState(currName);
   const [ava, setAva] = useState(null);
+  const { updUserMut, isPending } = useUpdUser();
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (!fullName) return;
+
+    updUserMut(
+      { fullName, ava },
+      {
+        onSuccess: () => {
+          setAva(null);
+          e.target.reset();
+        },
+      }
+    );
   }
+
+  function resetHandle() {
+    setFullName(currName);
+    setAva(null);
+  }
+
+  if (isPending) return <Loader />;
 
   return (
     <Form padding="" onSubmit={handleSubmit}>
       <FormRow label="Email address" error={""}>
-        <Input
-          type="email"
-          id="email"
-          value={email}
-          width='30'
-          disabled
-        />
+        <Input type="email" id="email" value={email} width="30" disabled />
       </FormRow>
       <FormRow label="Full name" error={""}>
-        <Input type="text" id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} width='30' />
+        <Input
+          type="text"
+          id="fullName"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          width="30"
+        />
       </FormRow>
       <FormRow label="Avatar image" error={""}>
-        <File type="file" id="ava" accept="image/*" value={ava} onChange={(e) => setAva(e.target.files[0])} width='30' />
+        <File
+          type="file"
+          id="ava"
+          accept="image/*"
+          onChange={(e) => {
+            setAva(e.target.files[0]);
+            console.log(e.target.files[0]);
+          }}
+          width="30"
+        />
       </FormRow>
       <BtnsContainer>
-        <Button styleAs="clear" type="reset">
+        <Button styleAs="clear" type="reset" onClick={resetHandle}>
           Clear
         </Button>
         <Button type="submit">Update account</Button>

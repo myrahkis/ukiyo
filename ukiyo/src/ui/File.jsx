@@ -15,7 +15,6 @@ const File = styled.input`
       transition: background-color 0.3s;
     }
   }
-  &::file-
 `;
 
 export default File;

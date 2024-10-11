@@ -25,7 +25,7 @@ function UpdateSettingsForm() {
   }
 
   return (
-    <Form>
+    <Form padding="">
       <div>
         <label>Minimum nights per booking</label>
         <Input
