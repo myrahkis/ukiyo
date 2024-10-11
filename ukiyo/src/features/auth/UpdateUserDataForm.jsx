@@ -41,7 +41,6 @@ function UpdateUserDataForm() {
     setAva(null);
   }
 
-  if (isPending) return <Loader />;
 
   return (
     <Form padding="" onSubmit={handleSubmit}>
@@ -55,6 +54,7 @@ function UpdateUserDataForm() {
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
           width="30"
+          disabled={isPending}
         />
       </FormRow>
       <FormRow label="Avatar image" error={""}>
@@ -67,13 +67,14 @@ function UpdateUserDataForm() {
             console.log(e.target.files[0]);
           }}
           width="30"
+          disabled={isPending}
         />
       </FormRow>
       <BtnsContainer>
-        <Button styleAs="clear" type="reset" onClick={resetHandle}>
+        <Button styleAs="clear" type="reset" onClick={resetHandle} disabled={isPending} >
           Clear
         </Button>
-        <Button type="submit">Update account</Button>
+        <Button type="submit" disabled={isPending}>Update account</Button>
       </BtnsContainer>
     </Form>
   );

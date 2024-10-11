@@ -32,6 +32,7 @@ function UpdatePasswordForm() {
           id="password"
           autoComplete="current-password"
           width="30"
+          disabled={isPending}
           {...register("password", {
             required: "This field is required",
             minLength: {
@@ -46,6 +47,7 @@ function UpdatePasswordForm() {
           type="password"
           id="passwordConfirm"
           width="30"
+          disabled={isPending}
           {...register("passwordConfirm", {
             required: "This field is required",
             validate: (value) =>
@@ -54,10 +56,17 @@ function UpdatePasswordForm() {
         />
       </FormRow>
       <BtnsContainer>
-        <Button styleAs="clear" type="reset" onClick={reset}>
+        <Button
+          styleAs="clear"
+          type="reset"
+          onClick={reset}
+          disabled={isPending}
+        >
           Clear
         </Button>
-        <Button type="submit">Update account</Button>
+        <Button type="submit" disabled={isPending}>
+          Update account
+        </Button>
       </BtnsContainer>
     </Form>
   );
