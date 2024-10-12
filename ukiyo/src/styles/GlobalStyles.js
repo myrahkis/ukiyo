@@ -15,11 +15,13 @@ const GlobalStyles = createGlobalStyle`
         --success-color: #259651;
         --light-success-color: #8fc59b;
         --dark-success-color: #005d1e;
+        --light-danger-color: #bd5942;
         --danger-color: #c23036;
         --dark-danger-color: #a0001e;
         --disabled-color: #748a94;
         --light-warning-color: #ffdf82;
         --dark-warning-color: #805d00;
+        --purple-color: #86769d;
 
         &.dark-mode {
             --light-bg-color: #202a22;

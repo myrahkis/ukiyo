@@ -2,6 +2,8 @@ import styled from "styled-components";
 import useRecentBooking from "./useRecentBookings";
 import Loader from "../../ui/Loader";
 import useRecentStays from "./useRecentStays";
+import Stats from "./Stats";
+import useRooms from "../rooms/useRooms";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -12,18 +14,19 @@ const StyledDashboardLayout = styled.div`
 
 function DashboardLayout() {
   const { bookings, isLoading } = useRecentBooking();
-  const { stays, isLoadingStays, confirmedStays } = useRecentStays();
+  const { stays, isLoadingStays, confirmedStays, numDays } = useRecentStays();
+  const { rooms, isLoading: isLoadingRooms } = useRooms();
 
-  const isWorking = isLoading || isLoadingStays;
+  const isWorking = isLoading || isLoadingStays || isLoadingRooms;
 
   if (isWorking) return <Loader />;
 
-//   console.log(bookings);
+  //   console.log(bookings);
 //   console.log(confirmedStays);
 
   return (
     <StyledDashboardLayout>
-      <div>Statistics</div>
+      <Stats bookings={bookings} confirmedStays={confirmedStays} numDays={numDays} roomCount={rooms.length} />
       <div>Today&apos;s activity</div>
       <div>Chart stay durations</div>
       <div>Chart sales</div>
