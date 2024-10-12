@@ -10,6 +10,7 @@ const StyledStat = styled.div`
   padding: 1.5rem;
   background-color: var(--lightest-bg-color);
   color: var(--dark-text-color);
+  border-radius: 1rem;
 `;
 
 const Icon = styled.div`
