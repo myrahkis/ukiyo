@@ -5,6 +5,7 @@ import useRecentStays from "./useRecentStays";
 import Stats from "./Stats";
 import useRooms from "../rooms/useRooms";
 import SalesChart from "./SalesChart";
+import DurationChart from "./DurationChart";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -22,14 +23,19 @@ function DashboardLayout() {
 
   if (isWorking) return <Loader />;
 
-    // console.log(bookings);
-//   console.log(confirmedStays);
+  // console.log(bookings);
+  //   console.log(confirmedStays);
 
   return (
     <StyledDashboardLayout>
-      <Stats bookings={bookings} confirmedStays={confirmedStays} numDays={numDays} roomCount={rooms.length} />
+      <Stats
+        bookings={bookings}
+        confirmedStays={confirmedStays}
+        numDays={numDays}
+        roomCount={rooms.length}
+      />
       <div>Today&apos;s activity</div>
-      <div>Chart stay durations</div>
+      <DurationChart confirmedStays={confirmedStays} />
       <SalesChart bookings={bookings} numDays={numDays} />
     </StyledDashboardLayout>
   );

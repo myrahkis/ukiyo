@@ -25,6 +25,11 @@ const StyledSalesChart = styled.div`
   }
 `;
 
+const H3 = styled.h3`
+  text-align: center;
+  padding: 2rem 0;
+`;
+
 function SalesChart({ bookings, numDays }) {
   const allDates = eachDayOfInterval({
     start: subDays(new Date(), numDays - 1),
@@ -49,7 +54,10 @@ function SalesChart({ bookings, numDays }) {
 
   return (
     <StyledSalesChart>
-      <h2>Sales</h2>
+      <H3>
+        Sales from {format(allDates.at(0), "MMM dd yyyy")} &mdash;{" "}
+        {format(allDates.at(-1), "MMM dd yyyy")}
+      </H3>
 
       <ResponsiveContainer height={300} width="100%">
         <AreaChart data={data}>
