@@ -1,4 +1,6 @@
+import { getTime } from "date-fns";
 import { MAX_ROWS } from "../utils/constants";
+import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
 export async function getBookings({ filter, sortBy, page }) {
@@ -66,4 +68,28 @@ export async function deleteBooking(id) {
 }
 
 // eg the last 30 days
-// export async function getBookingAfterDate(date) {}
+// date must be ISOString
+export async function getBookingAfterDate(date) {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("created_at, totalPrice, extrasPrice")
+    .gte("created_at", date)
+    .lte("created_at", getToday({ end: true }));
+
+  if (error) throw new Error(`Couldn't load bookings after ${date}!`);
+
+  return data;
+}
+
+// date must be ISOString
+export async function getStaysAfterDate(date) {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("*, guests(fullName)")
+    .gte("startDate", date)
+    .lte("startDate", getToday());
+
+  if (error) throw new Error(`Couldn't load stays after ${date}!`);
+
+  return data;
+}
