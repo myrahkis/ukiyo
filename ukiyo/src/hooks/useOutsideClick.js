@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-function useOutsideClick(handler) {
+function useOutsideClick(handler, listenCapturing = true) {
   const ref = useRef();
 
   useEffect(
@@ -12,21 +12,23 @@ function useOutsideClick(handler) {
         }
       }
 
-      function handleScroll() {
-        // console.log("Scrolling detected");
-        handler(); // Закрытие меню при скролле
+      function handleScroll(e) {
+        if (ref.current && !ref.current.contains(e.target)) {
+          console.log("Scrolling detected");
+          handler(); // Закрытие меню при скролле
+        }
       }
 
-      window.addEventListener("scroll", handleScroll, true);
+      window.addEventListener("scroll", handleScroll, listenCapturing);
 
-      document.addEventListener("click", handleClick, true);
+      document.addEventListener("click", handleClick, listenCapturing);
 
       return () => {
-        window.removeEventListener("scroll", handleScroll);
-        document.removeEventListener("click", handleClick, true);
+        window.removeEventListener("scroll", handleScroll, listenCapturing);
+        document.removeEventListener("click", handleClick, listenCapturing);
       };
     },
-    [handler]
+    [handler, listenCapturing]
   );
 
   return ref;
