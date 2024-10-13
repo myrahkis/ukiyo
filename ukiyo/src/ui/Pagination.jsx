@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import styled from "styled-components";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { useSearchParams } from "react-router-dom";
 import { MAX_ROWS } from "../utils/constants";
+import styled from "styled-components";
 
 const StyledPagination = styled.div`
   display: flex;

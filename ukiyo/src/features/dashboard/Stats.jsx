@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import { BsFillSuitcase2Fill } from "react-icons/bs";
-import Stat from "./Stat";
 import { FaCalendarCheck, FaChartLine } from "react-icons/fa6";
 import { GrMoney } from "react-icons/gr";
+import Stat from "./Stat";
 
 function Stats({ bookings, confirmedStays, numDays, roomCount }) {
   const numBookings = bookings.length;

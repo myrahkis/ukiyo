@@ -1,7 +1,14 @@
+import styled from "styled-components";
 import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import { useSettings } from "./useSettings";
 import { useUpdateSettings } from "./useUpdateSettings";
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+`;
 
 function UpdateSettingsForm() {
   const { isUpdating, updSettings } = useUpdateSettings();
@@ -25,8 +32,8 @@ function UpdateSettingsForm() {
   }
 
   return (
-    <Form padding="">
-      <div>
+    <Form padding="4rem 5.5rem">
+      <Wrapper>
         <label>Minimum nights per booking</label>
         <Input
           type="number"
@@ -35,8 +42,8 @@ function UpdateSettingsForm() {
           onBlur={(e) => handleUpd(e, "minBookingLength")}
           disabled={isWorking}
         />
-      </div>
-      <div>
+      </Wrapper>
+      <Wrapper>
         <label>Maximum nights per booking</label>
         <Input
           type="number"
@@ -45,8 +52,8 @@ function UpdateSettingsForm() {
           onBlur={(e) => handleUpd(e, "maxBookingLength")}
           disabled={isWorking}
         />
-      </div>
-      <div>
+      </Wrapper>
+      <Wrapper>
         <label>Max guests per booking</label>
         <Input
           type="number"
@@ -55,8 +62,8 @@ function UpdateSettingsForm() {
           onBlur={(e) => handleUpd(e, "maxGuestsPerBooking")}
           disabled={isWorking}
         />
-      </div>
-      <div>
+      </Wrapper>
+      <Wrapper>
         <label>Breakfast price</label>
         <Input
           type="number"
@@ -65,7 +72,7 @@ function UpdateSettingsForm() {
           onBlur={(e) => handleUpd(e, "breakfastPrice")}
           disabled={isWorking}
         />
-      </div>
+      </Wrapper>
     </Form>
   );
 }

@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import Menus from "../../ui/Menus";
 import BookingRow from "./BookingRow";
 import EmptyTable from "../../ui/EmptyTable";

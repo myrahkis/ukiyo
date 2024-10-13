@@ -3,7 +3,6 @@ import Logout from "./Logout";
 import { useNavigate } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { useState } from "react";
 import { useDarkMode } from "../context/DarkModeContext";
 
 const StyledHeaderMenu = styled.ul`

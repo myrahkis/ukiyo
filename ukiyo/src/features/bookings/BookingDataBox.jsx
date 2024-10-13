@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import { format, isToday } from "date-fns";
 import { formatDistanceFromNow } from "../../utils/helpers";
-import styled, { css } from "styled-components";
 import { PiBookOpenTextLight } from "react-icons/pi";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { IoPricetagsOutline } from "react-icons/io5";
+import styled, { css } from "styled-components";
 
 const StyledBookingDataBox = styled.div`
   overflow: hidden;

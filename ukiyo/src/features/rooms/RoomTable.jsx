@@ -1,6 +1,6 @@
+import { useSearchParams } from "react-router-dom";
 import RoomRow from "./RoomRow";
 import Menus from "../../ui/Menus";
-import { useSearchParams } from "react-router-dom";
 import EmptyTable from "../../ui/EmptyTable";
 import TableFooter from "../../ui/TableFooter";
 import Pagination from "../../ui/Pagination";

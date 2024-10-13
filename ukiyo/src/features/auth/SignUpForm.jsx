@@ -1,9 +1,10 @@
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import Button from "../../ui/Button";
-import { useForm } from "react-hook-form";
 import useSignUp from "./useSignUp";
 import Loader from "../../ui/Loader";
 
@@ -23,9 +24,13 @@ function SignUpForm() {
     reset,
   } = useForm();
   const { signUpMut, isPending } = useSignUp();
+  const navigate = useNavigate();
 
   function onSubmit({ fullName, email, password }) {
-    signUpMut({ fullName, email, password }, { onSettled: reset });
+    signUpMut(
+      { fullName, email, password },
+      { onSettled: reset, onSuccess: navigate("/login", { replace: true }) }
+    );
   }
 
   if (isPending) return <Loader />;

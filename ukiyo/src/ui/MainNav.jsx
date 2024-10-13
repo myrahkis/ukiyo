@@ -1,8 +1,7 @@
-import { FaUser } from "react-icons/fa";
-import { HiHome, HiUser } from "react-icons/hi";
+import { HiHome } from "react-icons/hi";
 import { HiMiniHomeModern, HiMiniUsers } from "react-icons/hi2";
 import { RiSettings4Fill } from "react-icons/ri";
-import { TbBookmarksFilled, TbUserFilled } from "react-icons/tb";
+import { TbBookmarksFilled } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { useDarkMode } from "../context/DarkModeContext";

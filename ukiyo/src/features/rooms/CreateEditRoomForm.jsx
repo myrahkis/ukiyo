@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useForm } from "react-hook-form";
-import styled from "styled-components";
-import FormRow from "../../ui/FormRow";
 import { useCreateRoom } from "./useCreateRoom";
 import { useEditRoom } from "./useEditRoom";
+import styled from "styled-components";
+import FormRow from "../../ui/FormRow";
 import Button from "../../ui/Button";
 import File from "../../ui/File";
 import BtnsContainer from "../../ui/BtnsContainer";
@@ -13,7 +13,6 @@ const Form = styled.form`
   flex-direction: column;
   gap: 1.5rem;
   font-size: 1.8rem;
-  /* margin: 2rem auto; */
   padding: 2rem 3rem;
   width: fit-content;
 `;
@@ -165,7 +164,6 @@ function CreateEditRoomForm({ roomToEdit = {}, onClose }) {
             required: isEditSession ? false : "This field is required.",
           })}
         />
-        {/* {errors.name && <Error>{errors.name.message}</Error>} */}
       </FormRow>
       <BtnsContainer>
         <Button type="reset" disabled={isWorking}>

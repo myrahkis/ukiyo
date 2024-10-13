@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useSearchParams } from "react-router-dom";
-import styled, { css } from "styled-components";
 import { useDarkMode } from "../context/DarkModeContext";
+import styled, { css } from "styled-components";
 
 const StyledFilter = styled.div`
   display: flex;

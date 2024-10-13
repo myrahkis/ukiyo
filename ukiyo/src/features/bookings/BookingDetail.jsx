@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { useCheckout } from "../check-in-out/useCheckout";
+import { MdDelete } from "react-icons/md";
 import Tag from "../../ui/Tag";
 import BookingDataBox from "./BookingDataBox";
 import useBookingId from "./useBookingId";
 import styled from "styled-components";
 import Loader from "../../ui/Loader";
-import { useCheckout } from "../check-in-out/useCheckout";
 import Modal from "../../ui/Modal";
-import { MdDelete } from "react-icons/md";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import useDeleteBooking from "./useDeleteBooking";
 import EmptyTable from "../../ui/EmptyTable";

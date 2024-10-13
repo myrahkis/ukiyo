@@ -1,6 +1,6 @@
+import { useDarkMode } from "../context/DarkModeContext";
 import styled from "styled-components";
 import Row from "../ui/Row";
-import { useDarkMode } from "../context/DarkModeContext";
 
 const StyledLogo = styled.img`
   width: 6rem;

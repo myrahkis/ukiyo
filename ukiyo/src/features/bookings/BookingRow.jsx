@@ -1,24 +1,24 @@
 /* eslint-disable react/prop-types */
 import { format, isToday } from "date-fns";
-import styled from "styled-components";
 import { formatDistanceFromNow } from "../../utils/helpers";
-import TableRow from "../../ui/TableRow";
-import Menus from "../../ui/Menus";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaBuildingCircleCheck } from "react-icons/fa6";
 import { CgDetailsMore } from "react-icons/cg";
 import { HiOutlineArrowUpOnSquare } from "react-icons/hi2";
-import MenuBtn from "../../ui/MenuBtn";
 import { useNavigate } from "react-router-dom";
-import Tag from "../../ui/Tag";
 import { useCheckout } from "../check-in-out/useCheckout";
+import { MdDelete } from "react-icons/md";
+import { useDarkMode } from "../../context/DarkModeContext";
+import styled from "styled-components";
+import TableRow from "../../ui/TableRow";
+import Menus from "../../ui/Menus";
+import MenuBtn from "../../ui/MenuBtn";
+import Tag from "../../ui/Tag";
 import Loader from "../../ui/Loader";
 import useDeleteBooking from "./useDeleteBooking";
-import { MdDelete } from "react-icons/md";
 import Modal from "../../ui/Modal";
-import ConfirmDelete from "../../ui/ConfirmDelete";
 import DeleteBtn from "../../ui/DeleteBtn";
-import { useDarkMode } from "../../context/DarkModeContext";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 const Room = styled.p``;
 

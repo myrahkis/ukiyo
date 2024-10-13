@@ -36,8 +36,6 @@ export async function deleteRoom(id) {
 }
 
 export async function createEditRoom(newRoom, id) {
-  // console.log(newRoom, id);
-
   const hasImgPath = newRoom.img?.startsWith?.(supabaseUrl);
 
   const imgName = `${Math.random()}-${newRoom.img.name}`.replaceAll("/", "");
@@ -61,7 +59,6 @@ export async function createEditRoom(newRoom, id) {
   const { data, error } = await query.select().single();
 
   if (error) {
-    console.error(error);
     throw new Error("Couldn't add new room!");
   }
 
@@ -78,15 +75,3 @@ export async function createEditRoom(newRoom, id) {
 
   return data;
 }
-
-// export async function updateRoom(id) {
-//   const { data, error } = await supabase
-//     .from("rooms")
-
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Couldn't update the room!");
-//   }
-
-//   return data;
-// }

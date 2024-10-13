@@ -7,7 +7,6 @@ import {
   Tooltip,
 } from "recharts";
 import styled from "styled-components";
-import { useDarkMode } from "../../context/DarkModeContext";
 
 const StyledDurationChart = styled.div`
   border-radius: 1rem;
@@ -64,49 +63,6 @@ const startData = [
   },
 ];
 
-// const startDataDark = [
-//   {
-//     duration: "1 night",
-//     value: 0,
-//     color: "var(--light-danger-color)",
-//   },
-//   {
-//     duration: "2 nights",
-//     value: 0,
-//     color: "#987124",
-//   },
-//   {
-//     duration: "3 nights",
-//     value: 0,
-//     color: "#6a8131",
-//   },
-//   {
-//     duration: "4-5 nights",
-//     value: 0,
-//     color: "#368959",
-//   },
-//   {
-//     duration: "6-7 nights",
-//     value: 0,
-//     color: "#008b84",
-//   },
-//   {
-//     duration: "8-14 nights",
-//     value: 0,
-//     color: "#2787a2",
-//   },
-//   {
-//     duration: "15-21 nights",
-//     value: 0,
-//     color: "#607eaa",
-//   },
-//   {
-//     duration: "21+ nights",
-//     value: 0,
-//     color: "var(--purple-color)",
-//   },
-// ];
-
 function prepareData(startDate, stays) {
   function incArrValue(arr, field) {
     return arr.map((obj) =>
@@ -134,9 +90,6 @@ function prepareData(startDate, stays) {
 }
 
 function DurationChart({ confirmedStays }) {
-  // const { isDark } = useDarkMode();
-  // const startData = isDark ? startDataDark : startDataLight;
-
   const data = prepareData(startData, confirmedStays);
 
   return (

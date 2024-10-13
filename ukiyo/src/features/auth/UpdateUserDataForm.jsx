@@ -7,7 +7,6 @@ import File from "../../ui/File";
 import BtnsContainer from "../../ui/BtnsContainer";
 import Button from "../../ui/Button";
 import useUpdUser from "./useUpdUser";
-import Loader from "../../ui/Loader";
 
 function UpdateUserDataForm() {
   const {

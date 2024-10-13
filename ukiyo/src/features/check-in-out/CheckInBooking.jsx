@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useCheckin } from "./useCheckin";
+import { useSettings } from "../settings/useSettings";
 import BookingDataBox from "../bookings/BookingDataBox";
 import useBookingId from "../bookings/useBookingId";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
 import Checkbox from "../../ui/Checkbox";
 import Loader from "../../ui/Loader";
-import { useCheckin } from "./useCheckin";
-import { useSettings } from "../settings/useSettings";
 
 const Header = styled.div`
   display: flex;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import useLogin from "./useLogin";
 import Form from "../../ui/Form";
@@ -26,7 +27,24 @@ const LoginBtn = styled.button`
 
 const Label = styled.label`
   font-size: 1.8rem;
-`
+`;
+
+const Button = styled.button`
+  align-self: flex-end;
+  text-decoration: none;
+  color: var(--light-text-color);
+  background-color: var(--main-color);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+
+  &:visited {
+    color: var(--light-text-color);
+  }
+  &:hover {
+    background-color: var(--dark-bg-color);
+    transition: background-color 0.3s;
+  }
+`;
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -51,6 +69,9 @@ function LoginForm() {
 
   return (
     <Form onSubmit={submitHandle} width="28" padding="">
+      <Button as={Link} to={`/signup`}>
+        Sign up
+      </Button>
       <Wrapper>
         <Label htmlFor="email">Email address</Label>
         <Input

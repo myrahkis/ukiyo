@@ -2,7 +2,6 @@ import styled from "styled-components";
 import useTodaysActivity from "./useTodaysActivity";
 import Loader from "../../ui/Loader";
 import TodayItem from "./TodayItem";
-import { isToday } from "date-fns";
 
 const StyledToday = styled.div`
   display: flex;

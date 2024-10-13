@@ -1,4 +1,3 @@
-import { getTime, isToday } from "date-fns";
 import { MAX_ROWS } from "../utils/constants";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
@@ -89,8 +88,6 @@ export async function getStaysAfterDate(date) {
     .gte("startDate", date)
     .lte("startDate", getToday({ end: true }));
 
-  // console.log(getToday());
-  // console.log(data);
   if (error) throw new Error(`Couldn't load stays after ${date}!`);
 
   return data;
@@ -104,8 +101,6 @@ export async function getStaysTodaysActivity() {
   // .or(
   //   `and(status.eq.unconfirmed,startDate.eq.${getToday()}),and(status.eq.checked-in,endDate.eq.${getToday()})`
   // )
-
-  // console.log(todayData);
 
   if (error) throw new Error(`Couldn't load stay's today's activity!`);
 

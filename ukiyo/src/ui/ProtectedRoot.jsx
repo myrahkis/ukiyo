@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useUser from "../features/auth/useUser";
 import Loader from "./Loader";
-import { useEffect } from "react";
 
 function ProtectedRoot({ children }) {
-  const { user, isLoading, isAuthenticated } = useUser();
+  const { isLoading, isAuthenticated } = useUser();
   const navigate = useNavigate();
 
   useEffect(
