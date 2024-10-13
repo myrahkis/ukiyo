@@ -9,6 +9,7 @@ import Modal from "../../ui/Modal";
 import { MdDelete } from "react-icons/md";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import useDeleteBooking from "./useDeleteBooking";
+import EmptyTable from "../../ui/EmptyTable";
 
 const Header = styled.div`
   display: flex;
@@ -84,6 +85,8 @@ function BookingDetail() {
   const navigate = useNavigate();
 
   if (isLoading || isCheckingOut || isDeleting) return <Loader />;
+
+  if (!booking) return <EmptyTable sub='booking' />
 
   const { id, status } = booking;
 
