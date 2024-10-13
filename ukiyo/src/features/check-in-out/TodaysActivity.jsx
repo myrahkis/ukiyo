@@ -29,21 +29,13 @@ const NoActivity = styled.p`
 function TodaysActivity() {
   const { activities, isLoading } = useTodaysActivity();
 
-  // @to-do: разобраться в чем проблем c or и переделать в запрос потом
-  const todayData = activities?.filter(
-    (booking) =>
-      (booking.status === "unconfirmed" &&
-        isToday(new Date(booking.startDate))) ||
-      (booking.status === "checked-in" && isToday(new Date(booking.endDate)))
-  );
-
   return (
     <StyledToday>
       <h3>Today</h3>
       {!isLoading ? (
-        todayData?.length > 0 ? (
+        activities?.length > 0 ? (
           <TodayList>
-            {todayData.map((activity) => (
+            {activities.map((activity) => (
               <TodayItem key={activity.id} item={activity} />
             ))}
           </TodayList>
