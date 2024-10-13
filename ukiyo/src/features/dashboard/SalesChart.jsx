@@ -50,7 +50,7 @@ function SalesChart({ bookings, numDays }) {
     };
   });
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <StyledSalesChart>

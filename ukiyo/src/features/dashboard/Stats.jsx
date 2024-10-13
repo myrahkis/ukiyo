@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { BsFillSuitcase2Fill } from "react-icons/bs";
 import Stat from "./Stat";
-import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { FaCalendarCheck, FaChartLine } from "react-icons/fa6";
 import { GrMoney } from "react-icons/gr";
 
