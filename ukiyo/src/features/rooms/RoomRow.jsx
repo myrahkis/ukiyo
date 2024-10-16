@@ -5,6 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaCopy, FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useDarkMode } from "../../context/DarkModeContext";
+import { device } from "../../styles/adaptability";
 import styled from "styled-components";
 import CreateEditRoomForm from "./CreateEditRoomForm";
 import Modal from "../../ui/Modal";
@@ -18,6 +19,23 @@ const Img = styled.img`
   display: block;
   width: 11rem;
   height: 9rem;
+
+  @media ${device.mobile} {
+    width: 8rem;
+    height: 6rem;
+  }
+`;
+
+const Name = styled.div`
+  @media ${device.mobile} {
+    min-width: 15rem;
+  }
+`;
+
+const Capacity = styled.div`
+  @media ${device.mobile} {
+    min-width: 9rem;
+  }
 `;
 
 const Price = styled.div`
@@ -57,22 +75,12 @@ function RoomRow({ room }) {
   return (
     <TableRow role="row" columns="0.6fr 2fr 1.2fr 0.8fr 0.8fr 0.6fr">
       <Img src={img} />
-      <div>{name}</div>
-      <div>Up to {maxCapacity} people</div>
+      <Name>{name}</Name>
+      <Capacity>Up to {maxCapacity} people</Capacity>
       <Price>${regularPrice}</Price>
       {discount !== 0 ? <Discount>${discount}</Discount> : "—"}
       <Menus.Menu>
-        <Menus.Toggle
-          id={id}
-          icon={
-            <BsThreeDotsVertical
-              style={{
-                fontSize: "2rem",
-                color: isDark && "var(--light-text-color)",
-              }}
-            />
-          }
-        />
+        <Menus.Toggle id={id} isDark={isDark} icon={<BsThreeDotsVertical />} />
         <Menus.List id={id}>
           <Menus.Button>
             <MenuBtn onClick={copyHandle} disabled={isWorking}>

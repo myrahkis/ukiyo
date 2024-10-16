@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { device } from "../styles/adaptability";
 
 const Form = styled.form`
   display: flex;
@@ -14,6 +15,19 @@ const Form = styled.form`
     css`
       align-items: center;
     `}
+
+  @media ${device.desktop} {
+    width: fit-content;
+    gap: 1.5rem;
+    padding: 3rem 3.5rem;
+    font-size: 1.8rem;
+  }
+
+  /* @media ${device.mobile} {
+    gap: 1.5rem;
+    padding: 3rem 2.5rem;
+    font-size: 1.8rem;
+  } */
 `;
 
 export default Form;

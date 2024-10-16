@@ -1,3 +1,4 @@
+import { device } from "../../styles/adaptability";
 import {
   Cell,
   Legend,
@@ -15,8 +16,49 @@ const StyledDurationChart = styled.div`
   color: var(--dark-text-color);
   padding: 1.5rem 2rem;
 
-  & > *:first-child {
+  /* & > *:first-child {
     margin-bottom: 1.5rem; // ???
+  } */
+
+  @media ${device.laptop} {
+    grid-column: 3 / -1;
+    padding: 1rem 1.5rem;
+  }
+
+  @media ${device.tablet} {
+    grid-column: 1 / -1;
+    padding: 1rem 1.5rem;
+  }
+
+  @media ${device.mobile} {
+    font-size: 1rem;
+    grid-column: 1 / -1;
+    padding: 1rem 1.5rem;
+  }
+`;
+
+const PieWrapper = styled.div`
+  width: 100%;
+  height: 27.5rem;
+
+  @media ${device.desktop} {
+    width: 100%;
+    height: 23rem;
+  }
+
+  @media ${device.laptop} {
+    width: 100%;
+    height: 16rem;
+  }
+
+  @media ${device.tablet} {
+    width: 100%;
+    height: 18rem;
+  }
+
+  @media ${device.mobile} {
+    width: 100%;
+    height: 23rem;
   }
 `;
 
@@ -95,32 +137,34 @@ function DurationChart({ confirmedStays }) {
   return (
     <StyledDurationChart>
       <h3>Stays duration summary</h3>
-      <ResponsiveContainer width="100%" height={320}>
-        <PieChart>
-          <Pie
-            data={data}
-            nameKey="duration"
-            dataKey="value"
-            innerRadius={55}
-            outerRadius={130}
-            cx="50%"
-            cy="43%"
-            // label
-          >
-            {data.map((entry, id) => (
-              <Cell fill={entry.color} stroke={entry.color} key={id} />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend
-            verticalAlign="middle"
-            align="right"
-            width="25%"
-            layout="vertical"
-            iconType="circle"
-          />
-        </PieChart>
-      </ResponsiveContainer>
+      <PieWrapper>
+        <ResponsiveContainer>
+          <PieChart>
+            <Pie
+              data={data}
+              nameKey="duration"
+              dataKey="value"
+              // innerRadius={55}
+              // outerRadius={130}
+              /* cx="50%"
+              cy="43%" */
+              // label
+            >
+              {data.map((entry, id) => (
+                <Cell fill={entry.color} stroke={entry.color} key={id} />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend
+              verticalAlign="middle"
+              align="right"
+              width="25%"
+              layout="vertical"
+              iconType="circle"
+            />
+          </PieChart>
+        </ResponsiveContainer>
+      </PieWrapper>
     </StyledDurationChart>
   );
 }

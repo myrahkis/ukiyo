@@ -1,13 +1,18 @@
+import { useSettings } from "./useSettings";
+import { useUpdateSettings } from "./useUpdateSettings";
+import { device } from "../../styles/adaptability";
 import styled from "styled-components";
 import Form from "../../ui/Form";
 import Input from "../../ui/Input";
-import { useSettings } from "./useSettings";
-import { useUpdateSettings } from "./useUpdateSettings";
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+
+  @media ${device.mobile} {
+    flex-direction: column;
+  }
 `;
 
 function UpdateSettingsForm() {

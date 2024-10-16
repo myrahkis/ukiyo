@@ -1,3 +1,4 @@
+import { device } from "../../styles/adaptability";
 import styled from "styled-components";
 import useTodaysActivity from "./useTodaysActivity";
 import Loader from "../../ui/Loader";
@@ -12,6 +13,10 @@ const StyledToday = styled.div`
   color: var(--dark-text-color);
   padding: 1.5rem 2rem;
   border-radius: 1rem;
+
+  @media ${device.mobile} {
+    grid-column: 1 / -1;
+  }
 `;
 
 const TodayList = styled.ul`

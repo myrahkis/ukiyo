@@ -1,3 +1,4 @@
+import { device } from "../styles/adaptability";
 import styled, { css } from "styled-components";
 
 const Button = styled.button`
@@ -24,6 +25,16 @@ const Button = styled.button`
         background-color: var(--main-color);
       }
     `}
+
+  @media ${device.tablet} {
+    padding: 0.7rem 1.5rem;
+    font-size: 1.3rem;
+  }
+
+  @media ${device.mobile} {
+    font-size: 1.5rem;
+    padding: 1rem 1.5rem;
+  }
 `;
 
 export default Button;

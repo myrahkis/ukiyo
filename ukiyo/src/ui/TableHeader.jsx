@@ -1,3 +1,4 @@
+import { device } from "../styles/adaptability";
 import styled from "styled-components";
 
 const TableHeader = styled.header`
@@ -11,6 +12,12 @@ const TableHeader = styled.header`
   border-bottom: 1px solid var(--emphasis-color);
   background-color: var(--main-color);
   padding: 1.5rem 2.5rem;
+
+  @media ${device.mobile} {
+    font-size: 1.4rem;
+    padding: 1rem;
+    grid-template-columns: repeat(6, auto);
+  }
 `;
 
 export default TableHeader;

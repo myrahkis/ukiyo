@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useSearchParams } from "react-router-dom";
 import { useDarkMode } from "../context/DarkModeContext";
+import { device } from "../styles/adaptability";
 import styled, { css } from "styled-components";
 
 const StyledFilter = styled.div`
@@ -10,6 +11,11 @@ const StyledFilter = styled.div`
   gap: 0.3rem;
   background-color: var(--lightest-bg-color);
   border-radius: 1rem;
+
+  @media ${device.mobile} {
+    width: fit-content;
+    margin-top: 0.5rem;
+  }
 `;
 
 const FilterBtn = styled.button`
@@ -36,6 +42,16 @@ const FilterBtn = styled.button`
 
   &:focus {
     border: 3px dashed var(--emphasis-color);
+  }
+
+  @media ${device.mobile} {
+    font-size: 1.2rem;
+    border: 1px dashed transparent;
+    padding: 0.5rem;
+
+    &:focus {
+      border: 1px dashed var(--emphasis-color);
+    }
   }
 `;
 

@@ -1,3 +1,4 @@
+import { device } from "../../styles/adaptability";
 import CreateEditRoomForm from "./CreateEditRoomForm";
 import styled from "styled-components";
 import Modal from "../../ui/Modal";
@@ -15,6 +16,12 @@ const Add = styled.button`
   &:hover {
     background-color: var(--dark-bg-color);
     transition: background-color 0.3s;
+  }
+
+  @media ${device.mobile} {
+    width: 20%;
+    padding: 1rem;
+    font-size: 1.2rem;
   }
 `;
 

@@ -1,4 +1,5 @@
 import { LuLogOut } from "react-icons/lu";
+import { device } from "../styles/adaptability";
 import useLogout from "../features/auth/useLogout";
 import Loader from "./Loader";
 import styled from "styled-components";
@@ -14,9 +15,19 @@ const StyledLogout = styled.button`
     background-color: var(--main-color);
     transition: background-color 0.3s;
   }
-`;
 
-const iconStyle = { fontSize: "2rem" };
+  & svg {
+    font-size: 2rem;
+
+    @media ${device.mobile} {
+      font-size: 1.8rem;
+    }
+  }
+
+  @media ${device.mobile} {
+    padding: 0.5rem;
+  }
+`;
 
 function Logout() {
   const { logoutMut, isPending } = useLogout();
@@ -29,7 +40,7 @@ function Logout() {
 
   return (
     <StyledLogout onClick={clickHandle}>
-      <LuLogOut style={iconStyle} />
+      <LuLogOut />
     </StyledLogout>
   );
 }

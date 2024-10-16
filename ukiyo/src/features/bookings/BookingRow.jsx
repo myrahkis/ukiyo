@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useCheckout } from "../check-in-out/useCheckout";
 import { MdDelete } from "react-icons/md";
 import { useDarkMode } from "../../context/DarkModeContext";
+import { device } from "../../styles/adaptability";
 import styled from "styled-components";
 import TableRow from "../../ui/TableRow";
 import Menus from "../../ui/Menus";
@@ -20,11 +21,19 @@ import Modal from "../../ui/Modal";
 import DeleteBtn from "../../ui/DeleteBtn";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 
-const Room = styled.p``;
+const Room = styled.p`
+  @media ${device.mobile} {
+    width: 12rem;
+  }
+`;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media ${device.mobile} {
+    width: 16rem;
+  }
 `;
 
 const Price = styled.div``;
@@ -85,10 +94,14 @@ function BookingRow({
       <Menus.Menu>
         <Menus.Toggle
           id={id}
-          icon={<BsThreeDotsVertical style={{
-            fontSize: "2rem",
-            color: isDark && "var(--light-text-color)",
-          }} />}
+          icon={
+            <BsThreeDotsVertical
+              style={{
+                fontSize: "2rem",
+                color: isDark && "var(--light-text-color)",
+              }}
+            />
+          }
         />
         <Menus.List id={id}>
           <Menus.Button>

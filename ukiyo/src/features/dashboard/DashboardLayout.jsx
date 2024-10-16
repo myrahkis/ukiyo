@@ -1,3 +1,4 @@
+import { device } from "../../styles/adaptability";
 import styled from "styled-components";
 import useRecentBooking from "./useRecentBookings";
 import Loader from "../../ui/Loader";
@@ -13,6 +14,29 @@ const StyledDashboardLayout = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto 34rem auto;
   gap: 2.5rem;
+
+  @media ${device.desktop} {
+    grid-template-rows: auto 30rem auto;
+    gap: 1.5rem;
+  }
+
+  @media ${device.laptop} {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto 24rem auto;
+    gap: 1rem;
+  }
+
+  @media ${device.tablet} {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 1rem;
+  }
+
+  @media ${device.mobile} {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 1rem;
+  }
 `;
 
 function DashboardLayout() {

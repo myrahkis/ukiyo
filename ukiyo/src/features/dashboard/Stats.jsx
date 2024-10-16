@@ -40,7 +40,7 @@ function Stats({ bookings, confirmedStays, numDays, roomCount }) {
         title="Occupancy rate"
         color={"var(--purple-color)"}
         icon={<FaChartLine />}
-        value={Math.round(occupation * 100) + '%'}
+        value={Math.round(occupation * 100) + "%"}
       />
     </>
   );

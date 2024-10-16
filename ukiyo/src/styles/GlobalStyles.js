@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { device } from "./adaptability";
 
 const GlobalStyles = createGlobalStyle`
     :root {
@@ -58,18 +59,30 @@ const GlobalStyles = createGlobalStyle`
         background-color: var(--light-bg-color);
         font-size: 1.5rem;
         min-height: 100vh;
+
+        @media ${device.tablet} {
+            font-size: 1.3rem;
+        }
+
+        @media ${device.mobile} {
+            font-size: 1rem;
+        }
     }
 
     button {
         cursor: pointer;
-
+        
         &:disabled {
             cursor: not-allowed;
             background-color: var(--disabled-color);
-
+            
             &:hover {
                 background-color: var(--disabled-color);
             }
+        }
+        
+        @media ${device.tablet} {
+            font-size: 1rem;
         }
     }
 

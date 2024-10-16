@@ -1,9 +1,10 @@
-import styled from "styled-components";
-import Logout from "./Logout";
 import { useNavigate } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { useDarkMode } from "../context/DarkModeContext";
+import { device } from "../styles/adaptability";
+import styled from "styled-components";
+import Logout from "./Logout";
 
 const StyledHeaderMenu = styled.ul`
   display: flex;
@@ -24,9 +25,19 @@ const Btn = styled.button`
     background-color: var(--main-color);
     transition: background-color 0.3s;
   }
-`;
 
-const iconStyle = { fontSize: "2rem" };
+  & svg {
+    font-size: 2rem;
+
+    @media ${device.mobile} {
+      font-size: 1.8rem;
+    }
+  }
+
+  @media ${device.mobile} {
+    padding: 0.5rem;
+  }
+`;
 
 function HeaderMenu() {
   const navigate = useNavigate();
@@ -36,16 +47,12 @@ function HeaderMenu() {
     <StyledHeaderMenu>
       <li>
         <Btn onClick={toggleDarkMode}>
-          {isDark ? (
-            <MdDarkMode style={iconStyle} />
-          ) : (
-            <MdLightMode style={iconStyle} />
-          )}
+          {isDark ? <MdDarkMode /> : <MdLightMode />}
         </Btn>
       </li>
       <li>
         <Btn onClick={() => navigate("/account")}>
-          <VscAccount style={iconStyle} />
+          <VscAccount />
         </Btn>
       </li>
       <li>

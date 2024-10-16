@@ -2,6 +2,7 @@
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { useSearchParams } from "react-router-dom";
 import { MAX_ROWS } from "../utils/constants";
+import { device } from "../styles/adaptability";
 import styled from "styled-components";
 
 const StyledPagination = styled.div`
@@ -9,15 +10,32 @@ const StyledPagination = styled.div`
   align-items: center;
   width: 60%;
   justify-content: space-between;
+
+  @media ${device.mobile} {
+    width: 75%;
+  }
 `;
 
 const Span = styled.span`
   font-weight: 700;
 `;
 
+const SpanPage = styled.span`
+  @media ${device.mobile} {
+    visibility: collapse;
+
+    & svg {
+    }
+  }
+`;
+
 const BtnsWrapper = styled.div`
   display: flex;
   gap: 0.5rem;
+
+  @media ${device.mobile} {
+    gap: 0;
+  }
 `;
 
 const PaginationBtn = styled.button`
@@ -31,6 +49,11 @@ const PaginationBtn = styled.button`
   color: var(--light-text-color);
   font-size: 1.5rem;
 
+  & svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
   &:hover {
     background-color: var(--emphasis-color);
     transition: background-color 0.3s;
@@ -43,9 +66,18 @@ const PaginationBtn = styled.button`
       background-color: transparent;
     }
   }
-`;
 
-const iconStyle = { width: "1.2rem", height: "1.2rem" };
+  @media ${device.mobile} {
+    width: 3rem;
+    padding: 0.5rem;
+    gap: 0;
+
+    & svg {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+  }
+`;
 
 function Pagination({ count }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -73,16 +105,19 @@ function Pagination({ count }) {
   return (
     <StyledPagination>
       <p>
-        Showing <Span>{(currentPage - 1) * MAX_ROWS + 1}</Span> to <Span>{currentPage === pageCount ? count : currentPage * MAX_ROWS}</Span> of <Span>{count}</Span>{" "}
-        results
+        Showing <Span>{(currentPage - 1) * MAX_ROWS + 1}</Span> to{" "}
+        <Span>
+          {currentPage === pageCount ? count : currentPage * MAX_ROWS}
+        </Span>{" "}
+        of <Span>{count}</Span> results
       </p>
 
       <BtnsWrapper>
         <PaginationBtn onClick={prevPage} disabled={currentPage === 1}>
-          <GrPrevious style={iconStyle} /> Previous
+          <GrPrevious /> <SpanPage>Previous</SpanPage>
         </PaginationBtn>
         <PaginationBtn onClick={nextPage} disabled={currentPage === pageCount}>
-          Next <GrNext style={iconStyle} />
+          <SpanPage>Next</SpanPage> <GrNext />
         </PaginationBtn>
       </BtnsWrapper>
     </StyledPagination>

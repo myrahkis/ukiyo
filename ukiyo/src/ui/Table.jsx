@@ -7,6 +7,7 @@ const Table = styled.div`
   border-top-right-radius: 1.5rem;
   background-color: var(--lightest-bg-color);
   box-shadow: 0 0 1px black;
+  font-size: 1.3rem;
 
   &:last-child {
     border-bottom-left-radius: 1.5rem;

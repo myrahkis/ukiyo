@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import useOutsideClick from "../hooks/useOutsideClick";
+import { device } from "../styles/adaptability";
 
 const StyledList = styled.ul`
   overflow: hidden;
@@ -27,6 +28,15 @@ const StyledToggle = styled.button`
     color: var(--light-text-color);
     background-color: var(--main-color);
     transition: all 0.2s ease-in;
+  }
+
+  @media ${device.mobile} {
+    padding: 0.8rem 0.6rem;
+
+    & svg {
+      font-size: 1.5rem;
+      color: ${(props) => props.isDark && "var(--light-text-color)"};
+    }
   }
 `;
 

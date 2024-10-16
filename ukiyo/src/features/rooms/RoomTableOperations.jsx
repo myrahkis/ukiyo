@@ -1,3 +1,4 @@
+import { device } from "../../styles/adaptability";
 import styled from "styled-components";
 import Filter from "../../ui/Filter";
 import SortBy from "../../ui/SortBy";
@@ -6,6 +7,10 @@ const TableOperations = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
+
+  @media ${device.mobile} {
+    flex-direction: column;
+  }
 `;
 
 function RoomTableOperations() {

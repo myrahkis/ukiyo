@@ -3,8 +3,9 @@ import { HiMiniHomeModern, HiMiniUsers } from "react-icons/hi2";
 import { RiSettings4Fill } from "react-icons/ri";
 import { TbBookmarksFilled } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
 import { useDarkMode } from "../context/DarkModeContext";
+import { device } from "../styles/adaptability";
+import styled from "styled-components";
 
 const NavList = styled.ul`
   display: flex;
@@ -12,6 +13,10 @@ const NavList = styled.ul`
   gap: 1rem;
   list-style: none;
   padding: 2rem 0;
+
+  @media ${device.tablet} {
+    gap: 0.5rem;
+  }
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -33,6 +38,23 @@ const StyledNavLink = styled(NavLink)`
   &.active:visited {
     background-color: var(--main-color);
     transition: background-color 0.5s;
+  }
+
+  @media ${device.tablet} {
+    &:link,
+    &:visited {
+      font-size: 1.5rem;
+      padding: 1rem;
+      gap: 0.3rem;
+    }
+  }
+
+  @media ${device.mobile} {
+    &:link,
+    &:visited {
+      font-size: 2rem;
+      padding: 1rem 1.5rem;
+    }
   }
 `;
 

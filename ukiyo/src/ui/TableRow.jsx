@@ -1,3 +1,4 @@
+import { device } from "../styles/adaptability";
 import styled from "styled-components";
 
 const TableRow = styled.div`
@@ -15,6 +16,12 @@ const TableRow = styled.div`
   &:hover {
     background-color: var(--light-bg-color);
     transition: background-color 0.3s;
+  }
+
+  @media ${device.mobile} {
+    overflow-x: auto;
+    column-gap: 1.5rem;
+    padding: 1rem;
   }
 `;
 

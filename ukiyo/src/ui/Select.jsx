@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { device } from "../styles/adaptability";
 import styled from "styled-components";
 
 const StyledSelect = styled.select`
@@ -8,6 +9,10 @@ const StyledSelect = styled.select`
   border-radius: 1rem;
   background-color: var(--lightest-bg-color);
   color: var(--dark-text-color);
+
+  @media ${device.mobile} {
+    padding: 0.8rem;
+  }
 `;
 
 function Select({ options, value, onChange }) {
