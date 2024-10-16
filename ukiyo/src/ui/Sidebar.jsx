@@ -18,7 +18,7 @@ const StyledSidebar = styled.aside`
     ${(props) =>
       !props.isOpen &&
       css`
-        visibility: collapse;
+        display: none;
       `}
   }
 `;
