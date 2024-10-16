@@ -26,8 +26,7 @@ const StyledAppLayout = styled.div`
             grid-template-columns: 19rem 1fr;
           `
         : css`
-            display: flex;
-            flex-direction: column;
+            grid-template-columns: auto;
           `}
   }
 `;
